@@ -6,12 +6,10 @@
     <title>NASZC GSM - Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <meta name="theme-color" content="#000000">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -26,9 +24,7 @@
         <div class="max-w-xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="logo.png" alt="Logo" class="w-8 h-8 rounded-lg object-cover">
-                <div>
-                    <h1 class="text-xl font-extrabold italic text-black">NASZC <span class="text-red-600">GSM</span></h1>
-                </div>
+                <h1 class="text-xl font-extrabold italic text-black">NASZC <span class="text-red-600">GSM</span></h1>
             </div>
             <button onclick="location.reload()" class="p-2 bg-white shadow-sm border rounded-xl">
                 <i data-lucide="refresh-cw" class="w-5 h-5 text-gray-600"></i>
@@ -37,86 +33,86 @@
     </nav>
 
     <main class="max-w-xl mx-auto p-5 pb-40">
-        <div class="grid grid-cols-3 gap-3 mb-6">
-            <div class="bg-white p-4 rounded-[24px] border border-gray-100 shadow-sm text-center">
-                <p class="text-[9px] font-bold text-gray-400 uppercase mb-1">Semua</p>
-                <p class="text-xs font-black text-black">RM <span id="stat-all" class="text-sm">0.00</span></p>
+        <div class="grid grid-cols-3 gap-3 mb-6 text-center font-black uppercase">
+            <div class="bg-white p-4 rounded-[24px] border border-gray-100 shadow-sm">
+                <p class="text-[9px] text-gray-400 mb-1">Semua</p>
+                <p class="text-xs">RM <span id="stat-all" class="text-sm">0.00</span></p>
             </div>
-            <div class="bg-white p-4 rounded-[24px] border border-green-100 shadow-sm text-center">
-                <p class="text-[9px] font-bold text-green-600 uppercase mb-1">Paid</p>
-                <p class="text-xs font-black text-green-600">RM <span id="stat-paid" class="text-sm">0.00</span></p>
+            <div class="bg-white p-4 rounded-[24px] border border-green-100 shadow-sm">
+                <p class="text-[9px] text-green-600 mb-1">Paid</p>
+                <p class="text-xs text-green-600">RM <span id="stat-paid" class="text-sm">0.00</span></p>
             </div>
-            <div class="bg-white p-4 rounded-[24px] border border-red-100 shadow-sm text-center">
-                <p class="text-[9px] font-bold text-red-600 uppercase mb-1">Unpaid</p>
-                <p class="text-xs font-black text-red-600">RM <span id="stat-unpaid" class="text-sm">0.00</span></p>
+            <div class="bg-white p-4 rounded-[24px] border border-red-100 shadow-sm">
+                <p class="text-[9px] text-red-600 mb-1">Unpaid</p>
+                <p class="text-xs text-red-600">RM <span id="stat-unpaid" class="text-sm">0.00</span></p>
             </div>
         </div>
 
         <div class="relative mb-8">
             <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari nama atau no. invois..." 
-                   class="w-full pl-11 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm outline-none focus:ring-2 focus:ring-black">
+            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari nama atau no. invois..." class="w-full pl-11 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm outline-none">
         </div>
 
         <div id="invoiceContainer" class="space-y-4">
-            <div class="py-20 text-center text-gray-400 italic">Memuatkan rekod...</div>
+            <div class="py-20 text-center text-gray-400 italic">Memuatkan...</div>
         </div>
     </main>
 
     <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-[85%] max-w-xs">
-        <div class="bg-black/90 backdrop-blur-xl rounded-2xl p-1.5 shadow-2xl flex justify-between items-center border border-white/10">
-            <button onclick="filterInvoices('all')" id="btn-all" class="flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black text-white bg-white/20">ALL</button>
-            <button onclick="filterInvoices('outstanding')" id="btn-outstanding" class="flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black text-red-400/60">UNPAID</button>
-            <button onclick="filterInvoices('paid')" id="btn-paid" class="flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black text-green-400/60">PAID</button>
+        <div class="bg-black/90 backdrop-blur-xl rounded-2xl p-1.5 shadow-2xl flex justify-between border border-white/10">
+            <button onclick="filterInvoices('all')" id="btn-all" class="flex-1 py-2.5 rounded-xl text-[10px] font-black text-white bg-white/20">ALL</button>
+            <button onclick="filterInvoices('outstanding')" id="btn-outstanding" class="flex-1 py-2.5 rounded-xl text-[10px] font-black text-red-400/60">UNPAID</button>
+            <button onclick="filterInvoices('paid')" id="btn-paid" class="flex-1 py-2.5 rounded-xl text-[10px] font-black text-green-400/60">PAID</button>
         </div>
     </div>
 
-    <button onclick="toggleModal(true)" class="fixed bottom-28 right-6 z-40 bg-red-600 text-white p-5 rounded-[22px] shadow-2xl active:scale-90">
+    <button onclick="openAddModal()" class="fixed bottom-28 right-6 z-40 bg-red-600 text-white p-5 rounded-[22px] shadow-2xl active:scale-90">
         <i data-lucide="plus" class="w-7 h-7"></i>
     </button>
 
-    <div id="invoiceModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex-col justify-end transition-all">
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex-col justify-end">
         <div class="bg-white rounded-t-[40px] w-full max-h-[92vh] overflow-y-auto p-8 shadow-2xl no-scrollbar">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-black text-gray-800">Invois Baru</h2>
+                <h2 id="modalTitle" class="text-2xl font-black text-gray-800">Invois Baru</h2>
                 <button onclick="toggleModal(false)" class="p-2 bg-gray-100 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
 
             <div class="space-y-5">
+                <input type="hidden" id="editId">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-2">
                         <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Nama Pelanggan</label>
-                        <input type="text" id="custName" placeholder="Nama Penuh" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-red-500">
+                        <input type="text" id="custName" placeholder="Nama Penuh" class="w-full p-4 bg-gray-50 border rounded-2xl outline-none">
                     </div>
                     <div>
                         <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">No. Telefon</label>
-                        <input type="tel" id="custPhone" oninput="syncInvoiceNo()" placeholder="01X..." class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none">
+                        <input type="tel" id="custPhone" oninput="syncInvoiceNo()" placeholder="01X..." class="w-full p-4 bg-gray-50 border rounded-2xl outline-none">
                     </div>
                     <div>
                         <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">No. Invois</label>
-                        <input type="text" id="invoiceNo" readonly class="w-full p-4 bg-gray-100 border border-gray-100 rounded-2xl font-mono text-xs text-red-600 font-bold">
+                        <input type="text" id="invoiceNo" readonly class="w-full p-4 bg-gray-100 border rounded-2xl font-mono text-xs text-red-600 font-bold">
                     </div>
                 </div>
 
-                <div class="border border-gray-100 rounded-[24px] overflow-hidden mt-6">
+                <div class="border rounded-[24px] overflow-hidden bg-white">
                     <div class="overflow-x-auto no-scrollbar">
                         <table class="w-full text-sm min-w-[500px]">
                             <thead class="bg-gray-50 border-b">
-                                <tr class="text-left">
-                                    <th class="p-4 font-bold text-gray-400 text-[10px] uppercase">Item</th>
-                                    <th class="p-4 font-bold text-gray-400 text-[10px] uppercase">Deskripsi</th>
-                                    <th class="p-4 font-bold text-gray-400 text-[10px] uppercase text-center w-20">Qty</th>
-                                    <th class="p-4 font-bold text-gray-400 text-[10px] uppercase text-right w-24">RM</th>
+                                <tr class="text-left text-[10px] text-gray-400 font-bold uppercase">
+                                    <th class="p-4">Item</th>
+                                    <th class="p-4">Deskripsi</th>
+                                    <th class="p-4 text-center">Qty</th>
+                                    <th class="p-4 text-right">Harga</th>
                                     <th class="w-12"></th>
                                 </tr>
                             </thead>
-                            <tbody id="itemRows" class="bg-white">
-                                <tr class="item-row border-b border-gray-50 last:border-0">
-                                    <td class="p-3"><input type="text" placeholder="Item" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td>
-                                    <td class="p-3"><input type="text" placeholder="Warna/Waranti" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td>
+                            <tbody id="itemRows">
+                                <tr class="item-row border-b last:border-0">
+                                    <td class="p-3"><input type="text" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td>
+                                    <td class="p-3"><input type="text" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td>
                                     <td class="p-3 text-center"><input type="number" value="1" class="w-14 text-center bg-gray-50 rounded-lg p-1 qty font-bold" oninput="calculateTotal()"></td>
-                                    <td class="p-3"><input type="number" step="0.01" placeholder="0.00" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td>
-                                    <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300 hover:text-red-500"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td>
+                                    <td class="p-3"><input type="number" step="0.01" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td>
+                                    <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -130,24 +126,13 @@
                         <option value="paid">PAID</option>
                     </select>
                     <div class="text-right">
-                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Total RM</p>
-                        <p class="text-3xl font-black text-black"><span id="grandTotal">0.00</span></p>
+                        <p class="text-[10px] font-black text-gray-400 uppercase">Total RM</p>
+                        <p class="text-3xl font-black"><span id="grandTotal">0.00</span></p>
                     </div>
                 </div>
 
-                <button onclick="saveAndGenerate()" id="btnSave" class="w-full bg-black text-white py-5 rounded-[24px] font-black uppercase tracking-[0.2em] shadow-xl active:scale-[0.98]">Simpan Invois</button>
+                <button onclick="saveAndGenerate()" id="btnSave" class="w-full bg-black text-white py-5 rounded-[24px] font-black uppercase tracking-[0.2em] shadow-xl">Simpan Invois</button>
             </div>
-        </div>
-    </div>
-
-    <div id="resultBox" class="fixed inset-0 z-[60] bg-green-600 hidden flex-col items-center justify-center p-8 text-white text-center">
-        <i data-lucide="check-circle" class="w-20 h-20 mb-6"></i>
-        <h2 class="text-4xl font-black mb-10 uppercase italic">Berjaya!</h2>
-        <div class="w-full space-y-3 max-w-xs">
-            <button onclick="shareWhatsApp()" class="w-full bg-white text-green-600 py-5 rounded-3xl font-black uppercase flex items-center justify-center gap-3">
-                <i data-lucide="message-circle" class="w-6 h-6"></i> WhatsApp Pelanggan
-            </button>
-            <button onclick="location.reload()" class="w-full py-5 font-bold uppercase text-xs opacity-70">Tutup</button>
         </div>
     </div>
 
@@ -167,13 +152,48 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        let currentFilter = 'all', shareUrl = '', lastPhone = '', allInvoices = [];
+        let currentFilter = 'all', allInvoices = [];
 
-        function toggleModal(show) { document.getElementById('invoiceModal').classList.toggle('modal-active', show); }
-        function syncInvoiceNo() { const p = document.getElementById('custPhone').value.replace(/\D/g,""), d = new Date().toISOString().slice(2,10).replace(/-/g,""); document.getElementById('invoiceNo').value = p ? `GSM-${d}-${p.slice(-4)}` : ""; }
-        function addRow() { const row = `<tr class="item-row border-b border-gray-50 last:border-0"><td class="p-3"><input type="text" placeholder="Item" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td><td class="p-3"><input type="text" placeholder="Deskripsi" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td><td class="p-3 text-center"><input type="number" value="1" class="w-14 text-center bg-gray-50 rounded-lg p-1 qty font-bold" oninput="calculateTotal()"></td><td class="p-3"><input type="number" step="0.01" placeholder="0.00" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td><td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300 hover:text-red-500"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td></tr>`; document.getElementById('itemRows').insertAdjacentHTML('beforeend', row); lucide.createIcons(); }
+        function toggleModal(show) { 
+            document.getElementById('invoiceModal').classList.toggle('modal-active', show); 
+            if(!show) resetForm();
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = "Invois Baru";
+            document.getElementById('editId').value = "";
+            toggleModal(true);
+        }
+
+        function resetForm() {
+            document.getElementById('custName').value = "";
+            document.getElementById('custPhone').value = "";
+            document.getElementById('invoiceNo').value = "";
+            document.getElementById('grandTotal').innerText = "0.00";
+            document.getElementById('initialStatus').value = "outstanding";
+            document.getElementById('itemRows').innerHTML = `<tr class="item-row border-b last:border-0"><td class="p-3"><input type="text" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td><td class="p-3"><input type="text" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td><td class="p-3 text-center"><input type="number" value="1" class="w-14 text-center bg-gray-50 rounded-lg p-1 qty font-bold" oninput="calculateTotal()"></td><td class="p-3"><input type="number" step="0.01" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td><td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td></tr>`;
+            lucide.createIcons();
+        }
+
+        function syncInvoiceNo() { 
+            if(document.getElementById('editId').value) return;
+            const p = document.getElementById('custPhone').value.replace(/\D/g,""), d = new Date().toISOString().slice(2,10).replace(/-/g,""); 
+            document.getElementById('invoiceNo').value = p ? `GSM-${d}-${p.slice(-4)}` : ""; 
+        }
+
+        function addRow() { 
+            const row = `<tr class="item-row border-b border-gray-50 last:border-0"><td class="p-3"><input type="text" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td><td class="p-3"><input type="text" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td><td class="p-3 text-center"><input type="number" value="1" class="w-14 text-center bg-gray-50 rounded-lg p-1 qty font-bold" oninput="calculateTotal()"></td><td class="p-3"><input type="number" step="0.01" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td><td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300 hover:text-red-500"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td></tr>`; 
+            document.getElementById('itemRows').insertAdjacentHTML('beforeend', row); 
+            lucide.createIcons(); 
+        }
+
         function removeRow(btn) { if(document.querySelectorAll('.item-row').length > 1) { btn.closest('tr').remove(); calculateTotal(); } }
-        function calculateTotal() { let t = 0; document.querySelectorAll('.item-row').forEach(r => { t += (parseFloat(r.querySelector('.qty').value)||0) * (parseFloat(r.querySelector('.price').value)||0); }); document.getElementById('grandTotal').innerText = t.toLocaleString('en-US', {minimumFractionDigits: 2}); }
+        
+        function calculateTotal() { 
+            let t = 0; 
+            document.querySelectorAll('.item-row').forEach(r => { t += (parseFloat(r.querySelector('.qty').value)||0) * (parseFloat(r.querySelector('.price').value)||0); }); 
+            document.getElementById('grandTotal').innerText = t.toLocaleString('en-US', {minimumFractionDigits: 2}); 
+        }
 
         async function fetchInvoices() {
             const snap = await db.collection("invoices").orderBy("createdAt", "desc").get();
@@ -197,13 +217,19 @@
             filtered.forEach(inv => {
                 const c = inv.status === 'paid' ? 'bg-green-100 text-green-600 border-green-200' : 'bg-red-50 text-red-500 border-red-100';
                 container.insertAdjacentHTML('beforeend', `
-                    <div class="bg-white p-5 rounded-[28px] border border-gray-100 shadow-sm relative active:scale-95 transition-transform">
+                    <div class="bg-white p-5 rounded-[28px] border border-gray-100 shadow-sm relative">
                         <div class="flex justify-between mb-4">
                             <div><h3 class="font-black text-gray-800 uppercase">${inv.customerName}</h3><p class="text-[10px] font-bold text-gray-400 font-mono">${inv.invoiceNo}</p></div>
-                            <button onclick="toggleStatus('${inv.id}','${inv.status}')" class="px-3 py-1.5 rounded-xl text-[9px] font-black border ${c} uppercase">${inv.status}</button>
+                            <div class="flex flex-col items-end gap-2">
+                                <span class="px-3 py-1.5 rounded-xl text-[9px] font-black border ${c} uppercase">${inv.status}</span>
+                                <div class="flex gap-2 no-print">
+                                    <button onclick="editInvoice('${inv.id}')" class="p-2 bg-gray-100 text-blue-600 rounded-lg"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                                    <button onclick="deleteInvoice('${inv.id}')" class="p-2 bg-gray-100 text-red-600 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-end">
-                            <div><p class="text-[9px] font-bold text-gray-400 uppercase mb-1">Total</p><p class="text-2xl font-black">RM ${inv.total}</p></div>
+                        <div class="flex justify-between items-end border-t pt-4">
+                            <div><p class="text-[9px] font-bold text-gray-400 uppercase">Total</p><p class="text-2xl font-black">RM ${inv.total}</p></div>
                             <div class="flex gap-2">
                                 <a href="https://wa.me/6${inv.customerPhone.replace(/\D/g,'')}" target="_blank" class="p-3 bg-green-50 text-green-600 rounded-2xl"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
                                 <a href="view.html?id=${inv.id}" target="_blank" class="p-3 bg-black text-white rounded-2xl"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
@@ -216,23 +242,64 @@
         }
 
         async function saveAndGenerate() {
-            const n = document.getElementById('custName').value, p = document.getElementById('custPhone').value;
+            const n = document.getElementById('custName').value, p = document.getElementById('custPhone').value, editId = document.getElementById('editId').value;
             if(!n || !p) return alert("Isi maklumat!");
+            
+            const btn = document.getElementById('btnSave');
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
             const items = [];
             document.querySelectorAll('.item-row').forEach(r => { const name = r.querySelector('.item-name').value; if(name) items.push({ name, description: r.querySelector('.item-desc').value, qty: r.querySelector('.qty').value, price: r.querySelector('.price').value }); });
-            const data = { invoiceNo: document.getElementById('invoiceNo').value, customerName: n, customerPhone: p, items, total: document.getElementById('grandTotal').innerText, status: document.getElementById('initialStatus').value, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-            const doc = await db.collection("invoices").add(data);
-            shareUrl = `${window.location.origin}/view.html?id=${doc.id}`;
-            lastPhone = p.replace(/\D/g,"");
-            document.getElementById('resultBox').classList.remove('hidden');
-            fetchInvoices();
+            
+            const data = { invoiceNo: document.getElementById('invoiceNo').value, customerName: n, customerPhone: p, items, total: document.getElementById('grandTotal').innerText, status: document.getElementById('initialStatus').value };
+
+            try {
+                if(editId) {
+                    await db.collection("invoices").doc(editId).update(data);
+                } else {
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection("invoices").add(data);
+                }
+                toggleModal(false);
+                fetchInvoices();
+            } catch(e) { alert("Error: " + e.message); }
+            btn.disabled = false;
+            btn.innerText = "Simpan Invois";
+        }
+
+        async function editInvoice(id) {
+            const inv = allInvoices.find(i => i.id === id);
+            if(!inv) return;
+            document.getElementById('editId').value = id;
+            document.getElementById('modalTitle').innerText = "Edit Invois";
+            document.getElementById('custName').value = inv.customerName;
+            document.getElementById('custPhone').value = inv.customerPhone;
+            document.getElementById('invoiceNo').value = inv.invoiceNo;
+            document.getElementById('initialStatus').value = inv.status;
+            document.getElementById('grandTotal').innerText = inv.total;
+            
+            const tbody = document.getElementById('itemRows');
+            tbody.innerHTML = "";
+            inv.items.forEach(item => {
+                const row = `<tr class="item-row border-b border-gray-50 last:border-0"><td class="p-3"><input type="text" value="${item.name}" class="w-full font-bold outline-none item-name text-xs bg-transparent"></td><td class="p-3"><input type="text" value="${item.description}" class="w-full text-gray-500 outline-none item-desc text-xs bg-transparent"></td><td class="p-3 text-center"><input type="number" value="${item.qty}" class="w-14 text-center bg-gray-50 rounded-lg p-1 qty font-bold" oninput="calculateTotal()"></td><td class="p-3"><input type="number" step="0.01" value="${item.price}" class="w-full text-right font-mono price text-xs outline-none" oninput="calculateTotal()"></td><td class="p-3 text-center"><button onclick="removeRow(this)" class="text-gray-300"><i data-lucide="minus-circle" class="w-4 h-4"></i></button></td></tr>`;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+            toggleModal(true);
+            lucide.createIcons();
+        }
+
+        async function deleteInvoice(id) {
+            if(confirm("Padam invois ini secara kekal?")) {
+                await db.collection("invoices").doc(id).delete();
+                fetchInvoices();
+            }
         }
 
         async function toggleStatus(id, cur) { await db.collection("invoices").doc(id).update({ status: cur === 'paid' ? 'outstanding' : 'paid' }); fetchInvoices(); }
         function handleSearch() { updateDashboard(document.getElementById('searchInput').value); }
-        function filterInvoices(t) { currentFilter = t; ['all','outstanding','paid'].forEach(b => { const el = document.getElementById('btn-'+b); if(b===t) el.className = `flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black text-white bg-white/20`; else el.className = `flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black ${b==='outstanding'?'text-red-400/60':b==='paid'?'text-green-400/60':'text-white/50'}`; }); updateDashboard(); }
-        function shareWhatsApp() { window.open(`https://wa.me/6${lastPhone}?text=Invois NASZC GSM: ${shareUrl}`, '_blank'); }
-
+        function filterInvoices(t) { currentFilter = t; ['all','outstanding','paid'].forEach(b => { document.getElementById('btn-'+b).className = (b===t) ? `flex-1 py-2.5 rounded-xl text-[10px] font-black text-white bg-white/20` : `flex-1 py-2.5 rounded-xl text-[10px] font-black ${b==='outstanding'?'text-red-400/60':b==='paid'?'text-green-400/60':'text-white/50'}`; }); updateDashboard(); }
+        
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
         window.onload = fetchInvoices;
     </script>
