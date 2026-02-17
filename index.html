@@ -13,47 +13,47 @@
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f8fafc; 
+            background-color: #f1f5f9; 
             color: #0f172a; 
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
 
-        /* Animations & Transitions */
-        .modal-active { display: flex !important; animation: sheetUp 0.5s cubic-bezier(0.32, 0.72, 0, 1); }
+        /* Animations & Bottom Sheet */
+        .modal-active { display: flex !important; animation: sheetUp 0.4s cubic-bezier(0.32, 0.72, 0, 1); }
         @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .view-hidden { display: none !important; }
         
-        /* Table & UI Slimming */
-        .report-table th { font-size: 9px; color: #94a3b8; text-transform: uppercase; padding: 12px 8px; border-bottom: 2px solid #f1f5f9; letter-spacing: 0.1em; font-weight: 800; }
-        .report-table td { font-size: 11px; padding: 12px 8px; border-bottom: 1px solid #f8fafc; font-weight: 700; }
+        .nav-glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
+        .tab-active { background-color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: #ef4444 !important; }
         
-        .nav-glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-        .tab-active { background-color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: #ef4444 !important; }
-        .spin-anim { animation: spin 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .report-table th { font-size: 9px; color: #94a3b8; text-transform: uppercase; padding: 14px 10px; border-bottom: 2px solid #f1f5f9; letter-spacing: 0.12em; font-weight: 800; }
+        .report-table td { font-size: 11px; padding: 14px 10px; border-bottom: 1px solid #f8fafc; font-weight: 700; }
+
+        .spin-anim { animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .btn-press:active { transform: scale(0.95); transition: 0.1s; }
-        .card-press:active { transform: scale(0.98); background-color: rgba(0,0,0,0.02); transition: 0.1s; }
+        .card-press:active { transform: scale(0.97); transition: 0.15s; }
+        .btn-press:active { transform: scale(0.92); transition: 0.1s; }
         .phone-font { font-family: 'Roboto Mono', monospace; }
     </style>
 </head>
-<body class="min-h-screen pb-28">
+<body class="min-h-screen pb-32">
 
     <nav class="sticky top-0 z-40 nav-glass border-b border-slate-200/50 px-6 py-4">
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-slate-950 rounded-xl flex items-center justify-center shadow-xl shadow-slate-200">
-                    <span class="text-white font-black text-sm italic text-red-600">NX</span>
+                <div class="w-10 h-10 bg-slate-950 rounded-xl flex items-center justify-center shadow-2xl shadow-slate-200">
+                    <span class="text-red-600 font-black text-xs italic">NX</span>
                 </div>
                 <div>
-                    <h1 class="text-[11px] font-black italic uppercase tracking-[0.2em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
-                    <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none">Repair Management System</p>
+                    <h1 class="text-[11px] font-black italic uppercase tracking-[0.25em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
+                    <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none">RMS Management System</p>
                 </div>
             </div>
-            <button onclick="refreshData(this)" class="p-2.5 bg-slate-50 rounded-full text-slate-400 hover:text-red-600 transition-all btn-press">
+            <button onclick="refreshData(this)" class="p-2.5 bg-slate-100/50 rounded-full text-slate-400 hover:text-red-600 transition-all btn-press">
                 <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
             </button>
         </div>
@@ -61,23 +61,23 @@
 
     <div class="max-w-md mx-auto p-4 space-y-6">
         
-        <main id="dashboardView" class="space-y-4">
+        <main id="dashboardView" class="space-y-5">
             <div class="grid grid-cols-3 gap-3">
                 <div class="bg-white rounded-2xl p-4 border border-white shadow-sm text-center">
-                    <p class="text-[8px] font-extrabold text-slate-400 uppercase mb-2 tracking-widest">Paid</p>
-                    <p class="text-[15px] font-black text-emerald-600 leading-none">RM <span id="stat-month-paid">0</span></p>
+                    <p class="text-[8px] font-extrabold text-slate-300 uppercase mb-2 tracking-widest">Paid</p>
+                    <p class="text-[15px] font-black text-emerald-600 leading-none italic">RM <span id="stat-month-paid">0</span></p>
                 </div>
                 <div class="bg-white rounded-2xl p-4 border border-white shadow-sm text-center">
-                    <p class="text-[8px] font-extrabold text-slate-400 uppercase mb-2 tracking-widest">Unpaid</p>
-                    <p class="text-[15px] font-black text-rose-600 leading-none">RM <span id="stat-month-pending">0</span></p>
+                    <p class="text-[8px] font-extrabold text-slate-300 uppercase mb-2 tracking-widest">Unpaid</p>
+                    <p class="text-[15px] font-black text-rose-600 leading-none italic">RM <span id="stat-month-pending">0</span></p>
                 </div>
                 <div class="bg-white rounded-2xl p-4 border border-white shadow-sm text-center">
-                    <p class="text-[8px] font-extrabold text-slate-400 uppercase mb-2 tracking-widest">Jobs</p>
-                    <p class="text-[15px] font-black text-slate-900 leading-none"><span id="stat-month-jobs">0</span></p>
+                    <p class="text-[8px] font-extrabold text-slate-300 uppercase mb-2 tracking-widest">Jobs</p>
+                    <p class="text-[15px] font-black text-slate-900 leading-none italic"><span id="stat-month-jobs">0</span></p>
                 </div>
             </div>
 
-            <div class="relative">
+            <div class="relative group">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 transition-colors"></i>
                 <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari Pelanggan..." 
                        class="w-full pl-11 pr-4 py-4 bg-white border-none rounded-2xl text-xs font-bold shadow-sm focus:ring-2 focus:ring-red-500/10 outline-none transition-all">
@@ -105,14 +105,14 @@
 
         <main id="profitView" class="view-hidden">
             <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-white">
-                <table class="w-full report-table text-left">
+                <table class="w-full report-table text-left text-gray-900">
                     <thead class="bg-slate-50/50">
                         <tr><th class="pl-6 text-slate-800">Bulan</th><th class="text-center text-rose-500">Modal</th><th class="text-center text-blue-600">Jualan</th><th class="text-right pr-6 text-emerald-600">Nett</th></tr>
                     </thead>
                     <tbody id="profitTableBody"></tbody>
                     <tfoot class="bg-slate-950 font-black">
                         <tr>
-                            <td class="pl-6 py-6 text-white/40 text-[9px] uppercase tracking-widest">Nett 2026</td>
+                            <td class="pl-6 py-6 text-white/40 text-[9px] uppercase tracking-widest leading-none">Profit 2026</td>
                             <td colspan="3" id="total-net-profit" class="text-right pr-6 text-white text-xl italic">RM 0</td>
                         </tr>
                     </tfoot>
@@ -143,7 +143,7 @@
         </div>
     </div>
 
-    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex-col justify-end">
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden flex-col justify-end">
         <div class="bg-white rounded-t-[3rem] w-full max-h-[94vh] overflow-y-auto p-8 shadow-2xl no-scrollbar">
             <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-8"></div>
             <div class="flex justify-between items-center mb-8">
@@ -174,7 +174,7 @@
                         <option value="paid">PAID</option>
                     </select>
                     <div class="text-right">
-                        <p class="text-[8px] font-black text-slate-300 uppercase leading-none mb-1.5">Total Bill</p>
+                        <p class="text-[8px] font-black text-slate-300 uppercase leading-none mb-1.5 tracking-widest">Total Bill</p>
                         <p class="text-2xl font-black text-slate-900 leading-none">RM <span id="grandTotal">0.00</span></p>
                     </div>
                 </div>
@@ -184,14 +184,14 @@
         </div>
     </div>
 
-    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex-col justify-end">
+    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md hidden flex-col justify-end">
         <div class="bg-white rounded-t-[3rem] w-full p-8 shadow-2xl space-y-2">
             <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-6"></div>
             <p id="actionTargetName" class="text-center font-black text-sm uppercase text-slate-900 mb-6 italic tracking-tight"></p>
             <button id="btnToggleStatus" class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl font-bold text-xs text-slate-900 btn-press"><span>Update Bayaran</span><i data-lucide="check-circle" class="w-5 h-5 text-emerald-500"></i></button>
-            <button onclick="handleAction('getlink')" class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl font-bold text-xs text-slate-900 btn-press"><span>Salin Link Invois</span><i data-lucide="link" class="w-5 h-5 text-blue-500"></i></button>
-            <button onclick="handleAction('edit')" class="w-full flex items-center justify-between p-4 bg-indigo-50 text-indigo-600 rounded-2xl font-bold text-xs btn-press"><span>Edit Maklumat</span><i data-lucide="edit-3" class="w-5 h-5"></i></button>
-            <button onclick="handleAction('delete')" class="w-full flex items-center justify-between p-4 bg-rose-50 text-rose-600 rounded-2xl font-bold text-xs btn-press"><span>Padam Rekod</span><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+            <button onclick="handleAction('getlink')" class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl font-bold text-xs text-slate-900 btn-press"><span>Salin Link Invois</span><i data-lucide="link" class="w-4 h-4 text-blue-500"></i></button>
+            <button onclick="handleAction('edit')" class="w-full flex items-center justify-between p-4 bg-indigo-50 text-indigo-600 rounded-2xl font-bold text-xs btn-press"><span>Edit Maklumat</span><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+            <button onclick="handleAction('delete')" class="w-full flex items-center justify-between p-4 bg-rose-50 text-rose-600 rounded-2xl font-bold text-xs btn-press"><span>Padam Rekod</span><i data-lucide="trash-2" class="w-4 h-4"></i></button>
             <button onclick="closeActionMenu()" class="w-full p-6 font-black text-[10px] text-slate-400 uppercase text-center mt-2 tracking-[0.3em]">Tutup</button>
         </div>
     </div>
@@ -252,6 +252,23 @@
             });
         }
 
+        // --- FILTER FUNCTION (FIXED) ---
+        function filterInvoices(type) {
+            currentFilter = type;
+            const btns = {all: 'f-all', paid: 'f-paid', outstanding: 'f-pending'};
+            Object.keys(btns).forEach(k => {
+                const b = document.getElementById(btns[k]);
+                if(k === type) { 
+                    b.classList.add('tab-active'); 
+                    b.classList.remove('text-slate-500'); 
+                } else { 
+                    b.classList.remove('tab-active'); 
+                    b.classList.add('text-slate-500'); 
+                }
+            });
+            updateDashboard();
+        }
+
         // --- INVOICE CORE LOGIC ---
         function createItemRow(d = {}) {
             return `
@@ -284,15 +301,16 @@
             const n = document.getElementById('custName').value, p = document.getElementById('custPhone').value, ed = document.getElementById('editId').value, st = document.getElementById('initialStatus').value, war = document.getElementById('warranty').value;
             if(!n || !p) return alert("Sila isi Nama & Phone!");
             const items = [];
-            document.querySelectorAll('.item-entry').forEach(r => { items.push({ name: r.querySelector('.item-name').value, desc: r.querySelector('.item-desc').value, qty: parseFloat(r.querySelector('.qty').value)||1, kos: parseFloat(r.querySelector('.kos').value)||0, modal: parseFloat(r.querySelector('.modal-price').value)||0, discount: parseFloat(r.querySelector('.discount').value)||0 }); });
+            document.querySelectorAll('.item-entry').forEach(r => { 
+                const name = r.querySelector('.item-name').value;
+                if(name) items.push({ name: name, desc: r.querySelector('.item-desc').value, qty: parseFloat(r.querySelector('.qty').value)||1, kos: parseFloat(r.querySelector('.kos').value)||0, modal: parseFloat(r.querySelector('.modal-price').value)||0, discount: parseFloat(r.querySelector('.discount').value)||0 }); 
+            });
             
             const data = { customerName: n, customerPhone: p, warranty: war, status: st, total: document.getElementById('grandTotal').innerText, items: items };
             
             try { 
-                if(ed) {
-                    await db.collection("invoices").doc(ed).update(data); 
-                } else {
-                    // Auto-generate sequential NX number
+                if(ed) { await db.collection("invoices").doc(ed).update(data); } 
+                else {
                     const nextNo = "NX-" + (allInvoices.length + 1).toString().padStart(4, '0');
                     data.invoiceNo = nextNo;
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
@@ -307,10 +325,12 @@
         function updateDashboard(search = "") {
             const container = document.getElementById('invoiceContainer'), now = new Date();
             let mPaid = 0, mPending = 0, mJobs = 0;
+            
             allInvoices.forEach(i => {
                 const a = parseFloat(i.total)||0, d = new Date(i.createdAt?.seconds * 1000 || Date.now());
                 if(d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) { mJobs++; if(i.status === 'paid') mPaid += a; else mPending += a; }
             });
+            
             document.getElementById('stat-month-paid').innerText = Math.round(mPaid);
             document.getElementById('stat-month-pending').innerText = Math.round(mPending);
             document.getElementById('stat-month-jobs').innerText = mJobs;
@@ -319,23 +339,24 @@
             if(currentFilter !== 'all') filtered = filtered.filter(i => i.status === currentFilter);
             if(search) { const q = search.toLowerCase(); filtered = filtered.filter(i => (i.customerName||"").toLowerCase().includes(q) || (i.customerPhone||"").includes(q)); }
 
-            container.innerHTML = filtered.length ? '' : '<div class="py-20 text-center text-slate-300 text-[10px] font-black uppercase tracking-widest italic">NASZEX CLOUD: TIADA DATA</div>';
+            container.innerHTML = filtered.length ? '' : '<div class="py-20 text-center text-slate-300 text-[10px] font-black uppercase tracking-widest italic leading-none">NASZEX CLOUD: TIADA DATA</div>';
+            
             filtered.forEach(inv => {
                 const isPaid = inv.status === 'paid', cardBg = isPaid ? 'bg-emerald-600' : 'bg-rose-600';
                 const dateVal = isPaid ? (inv.paidAt || inv.createdAt) : inv.createdAt;
 
                 container.insertAdjacentHTML('beforeend', `
-                    <div onclick="openActionMenu('${inv.id}', '${(inv.customerName||"").replace(/'/g, "\\'")}')" class="${cardBg} px-4 py-2.5 rounded-2xl flex items-center justify-between text-white transition-all card-press shadow-md border-b-2 border-black/10">
+                    <div onclick="openActionMenu('${inv.id}', '${(inv.customerName||"").replace(/'/g, "\\'")}')" class="${cardBg} px-4 py-3 rounded-2xl flex items-center justify-between text-white transition-all card-press shadow-md border-b-2 border-black/10">
                         <div class="info-col">
-                            <h3 class="font-extrabold text-[12px] uppercase truncate leading-none mb-1.5 tracking-tight">${inv.customerName || "No Name"}</h3>
+                            <h3 class="font-extrabold text-[12px] uppercase truncate leading-none mb-2 tracking-tight">${inv.customerName || "No Name"}</h3>
                             <div class="flex items-center gap-2">
                                 <p class="text-[9px] font-bold phone-font text-white/80 leading-none">${inv.customerPhone || '---'}</p>
-                                <span class="text-[7px] font-black uppercase bg-black/10 px-1.5 py-0.5 rounded-md leading-none tracking-tighter">${inv.invoiceNo || 'NX-0000'}</span>
-                                <span class="text-[7px] font-black uppercase bg-black/10 px-1.5 py-0.5 rounded-md leading-none tracking-tighter">${formatDate(dateVal)}</span>
+                                <span class="text-[7px] font-black uppercase bg-black/15 px-1.5 py-0.5 rounded-md leading-none tracking-tighter">${inv.invoiceNo || 'NX-0000'}</span>
+                                <span class="text-[7px] font-black uppercase bg-black/15 px-1.5 py-0.5 rounded-md leading-none tracking-tighter">${formatDate(dateVal)}</span>
                             </div>
                         </div>
                         <div class="price-col text-right">
-                            <p class="text-[16px] font-black italic leading-none">RM ${Math.round(parseFloat(inv.total))}</p>
+                            <p class="text-[17px] font-black italic leading-none">RM ${Math.round(parseFloat(inv.total))}</p>
                             <p class="text-[8px] font-bold text-white/50 mt-1 uppercase tracking-tighter">${isPaid ? 'PAID' : 'PENDING'}</p>
                         </div>
                     </div>
@@ -346,12 +367,11 @@
 
         function generateReport() {
             const tb = document.getElementById('reportTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
-            let h = "", tC = 0, tJ = 0, tP = 0;
+            let h = "";
             mo.forEach((m, i) => {
                 const monthly = allInvoices.filter(inv => { const d = new Date(inv.createdAt?.seconds * 1000 || Date.now()); return d.getMonth() === i && d.getFullYear() === 2026; });
                 const uC = new Set(monthly.map(inv => inv.customerPhone)).size, pS = monthly.reduce((s, inv) => inv.status === 'paid' ? s + parseFloat(inv.total) : s, 0);
-                tC += uC; tJ += monthly.length; tP += pS;
-                h += `<tr><td class="pl-6 text-slate-400 font-extrabold">${m}</td><td class="text-center text-orange-600 font-black">${uC}</td><td class="text-center text-blue-600 font-black">${monthly.length}</td><td class="text-right pr-6 text-green-600 font-black">RM ${Math.round(pS)}</td></tr>`;
+                h += `<tr><td class="pl-6 text-slate-400 font-extrabold uppercase text-[10px] tracking-widest">${m}</td><td class="text-center text-orange-600 font-black">${uC}</td><td class="text-center text-blue-600 font-black">${monthly.length}</td><td class="text-right pr-6 text-green-600 font-black">RM ${Math.round(pS)}</td></tr>`;
             });
             tb.innerHTML = h;
         }
@@ -360,14 +380,11 @@
             const tb = document.getElementById('profitTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
             let h = "", totalNett = 0;
             mo.forEach((m, i) => {
-                const monthly = allInvoices.filter(inv => { 
-                    const d = new Date(inv.createdAt?.seconds * 1000 || Date.now()); 
-                    return d.getMonth() === i && d.getFullYear() === 2026 && inv.status === 'paid'; 
-                });
+                const monthly = allInvoices.filter(inv => { const d = new Date(inv.createdAt?.seconds * 1000 || Date.now()); return d.getMonth() === i && d.getFullYear() === 2026 && inv.status === 'paid'; });
                 let mModal = 0, mRev = 0;
                 monthly.forEach(inv => { mRev += parseFloat(inv.total); (inv.items || []).forEach(it => { mModal += (parseFloat(it.modal)||0) * (parseFloat(it.qty)||1); }); });
                 const mProfit = mRev - mModal; totalNett += mProfit;
-                h += `<tr><td class="pl-6 text-slate-400 font-extrabold">${m}</td><td class="text-center text-rose-500 font-black">RM ${Math.round(mModal)}</td><td class="text-center text-blue-600 font-black">RM ${Math.round(mRev)}</td><td class="text-right pr-6 text-green-600 font-black">RM ${Math.round(mProfit)}</td></tr>`;
+                h += `<tr><td class="pl-6 text-slate-400 font-extrabold uppercase text-[10px] tracking-widest">${m}</td><td class="text-center text-rose-500 font-black">RM ${Math.round(mModal)}</td><td class="text-center text-blue-600 font-black">RM ${Math.round(mRev)}</td><td class="text-right pr-6 text-green-600 font-black">RM ${Math.round(mProfit)}</td></tr>`;
             });
             tb.innerHTML = h; document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
         }
@@ -375,7 +392,7 @@
         // --- ACTIONS ---
         async function editInvoice(id) {
             const inv = allInvoices.find(i => i.id === id); if(!inv) return;
-            document.getElementById('editId').value = id; document.getElementById('modalTitle').innerText = "Edit Invois " + (inv.invoiceNo || "");
+            document.getElementById('editId').value = id; document.getElementById('modalTitle').innerText = "Edit " + (inv.invoiceNo || "Invois");
             document.getElementById('custName').value = inv.customerName; document.getElementById('custPhone').value = inv.customerPhone;
             document.getElementById('warranty').value = inv.warranty || "No Warranty"; document.getElementById('initialStatus').value = inv.status;
             const cont = document.getElementById('itemRowsContainer'); cont.innerHTML = "";
@@ -387,7 +404,7 @@
         function closeActionMenu() { document.getElementById('actionModal').classList.remove('modal-active'); activeId = null; }
         async function toggleStatus(id, c) { const ns = c==='paid'?'outstanding':'paid'; const d = {status:ns}; if(ns==='paid') d.paidAt = firebase.firestore.FieldValue.serverTimestamp(); await db.collection("invoices").doc(id).update(d); closeActionMenu(); }
         function handleAction(type) { if(type==='edit') editInvoice(activeId); if(type==='delete') deleteInvoice(activeId); if(type==='getlink') { navigator.clipboard.writeText(`${window.location.origin}/view.html?id=${activeId}`); alert("Link Disalin!"); } closeActionMenu(); }
-        async function deleteInvoice(id) { if(confirm("Padam Invois?")) await db.collection("invoices").doc(id).delete(); }
+        async function deleteInvoice(id) { if(confirm("Padam Rekod Ini?")) await db.collection("invoices").doc(id).delete(); }
         function handleSearch() { updateDashboard(document.getElementById('searchInput').value); }
         function toggleModal(s) { document.getElementById('invoiceModal').classList.toggle('modal-active', s); }
         function openAddModal() { document.getElementById('modalTitle').innerText = "Invois Baru"; document.getElementById('editId').value = ""; document.getElementById('itemRowsContainer').innerHTML = createItemRow(); document.getElementById('custName').value = ""; document.getElementById('custPhone').value = ""; document.getElementById('grandTotal').innerText = "0.00"; toggleModal(true); lucide.createIcons(); }
