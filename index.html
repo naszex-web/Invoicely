@@ -11,10 +11,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@500&display=swap');
         
-        :root {
-            --shadow-cinematic: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-        }
-
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
@@ -34,36 +30,41 @@
         .view-hidden { display: none !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* Glass & Blur Effects */
-        .nav-glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-        .tab-active { background: white; box-shadow: var(--shadow-cinematic); color: #ef4444 !important; transform: scale(1.02); }
+        /* Glass UI Premium */
+        .nav-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+        .tab-active { background: white; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #ef4444 !important; transform: scale(1.02); }
         
-        /* Pulse System per Status */
-        .pulse-waiting { animation: pWaiting 2s infinite; }
-        @keyframes pWaiting { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+        /* Multi-Color Pulse System */
+        .p-indigo { animation: pulseInd 2s infinite; }
+        @keyframes pulseInd { 0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); } 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); } }
         
-        .pulse-repairing { animation: pRepairing 2s infinite; }
-        @keyframes pRepairing { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
+        .p-amber { animation: pulseAmb 2s infinite; }
+        @keyframes pulseAmb { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+
+        .p-purple { animation: pulsePur 2s infinite; }
+        @keyframes pulsePur { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); } 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); } }
+
+        .p-blue { animation: pulseBlu 2s infinite; }
+        @keyframes pulseBlu { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
 
         .btn-press:active { transform: scale(0.92); filter: brightness(0.9); transition: 0.15s; }
-        .card-press:active { transform: scale(0.97); background-color: #f8fafc; transition: 0.15s; }
+        .card-press:active { transform: scale(0.97); transition: 0.15s; }
         
-        /* Modern Gradient Buttons */
         .grad-save { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
         .grad-dark { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
     </style>
 </head>
 <body class="min-h-screen pb-36">
 
-    <nav class="sticky top-0 z-40 nav-glass border-b border-white px-6 py-5">
+    <nav class="sticky top-0 z-40 nav-glass border-b border-white/50 px-6 py-5">
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-slate-950 rounded-2xl flex items-center justify-center shadow-2xl">
-                    <span class="text-white font-black text-sm italic tracking-tighter text-red-500">NX</span>
+                    <span class="text-red-500 font-black text-sm italic tracking-tighter">NX</span>
                 </div>
                 <div>
-                    <h1 class="text-[13px] font-extrabold italic uppercase tracking-[0.35em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
-                    <p class="text-[7px] font-black text-slate-400 uppercase tracking-[0.5em] mt-2 leading-none">RMS Professional 2026</p>
+                    <h1 class="text-[13px] font-black italic uppercase tracking-[0.35em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
+                    <p class="text-[7px] font-black text-slate-400 uppercase tracking-[0.5em] mt-2 leading-none">RMS Cinematic v5.0</p>
                 </div>
             </div>
             <button onclick="refreshData(this)" class="p-3.5 bg-slate-100 rounded-full text-slate-500 hover:text-red-600 transition-all btn-press shadow-inner">
@@ -77,25 +78,16 @@
         <main id="dashboardView" class="space-y-8">
             <div class="grid grid-cols-3 gap-4">
                 <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <div class="w-8 h-8 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
-                    </div>
                     <p class="text-[18px] font-black text-slate-900 leading-none italic">RM <span id="stat-month-paid">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest">Paid</p>
+                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Paid</p>
                 </div>
                 <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <div class="w-8 h-8 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i data-lucide="clock" class="w-4 h-4 text-rose-500"></i>
-                    </div>
                     <p class="text-[18px] font-black text-slate-900 leading-none italic">RM <span id="stat-month-pending">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest">Unpaid</p>
+                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Unpaid</p>
                 </div>
                 <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <div class="w-8 h-8 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i data-lucide="briefcase" class="w-4 h-4 text-indigo-500"></i>
-                    </div>
                     <p class="text-[18px] font-black text-slate-900 leading-none italic"><span id="stat-month-jobs">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest">Total Jobs</p>
+                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Jobs</p>
                 </div>
             </div>
 
@@ -116,26 +108,30 @@
 
         <main id="reportsView" class="view-hidden">
             <div class="bg-white rounded-[3.5rem] shadow-2xl overflow-hidden border-4 border-white">
-                <table class="w-full report-table text-left">
+                <table class="w-full text-left">
                     <thead class="bg-slate-50">
-                        <tr><th class="pl-8">Bulan</th><th class="text-center">Klien</th><th class="text-center">Jobs</th><th class="text-right pr-8">Total (RM)</th></tr>
+                        <tr>
+                            <th class="pl-8 py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Bulan</th>
+                            <th class="text-center py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Jobs</th>
+                            <th class="text-right pr-8 py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Total</th>
+                        </tr>
                     </thead>
-                    <tbody id="reportTableBody" class="text-slate-900"></tbody>
+                    <tbody id="reportTableBody" class="text-slate-900 font-bold"></tbody>
                 </table>
             </div>
         </main>
 
         <main id="profitView" class="view-hidden">
             <div class="bg-white rounded-[3.5rem] shadow-2xl overflow-hidden border-4 border-white">
-                <table class="w-full report-table text-left text-slate-900">
+                <table class="w-full text-left text-slate-900">
                     <thead class="bg-slate-50">
-                        <tr><th class="pl-8">Bulan</th><th class="text-center text-rose-500">Modal</th><th class="text-center text-blue-600">Jualan</th><th class="text-right pr-8 text-emerald-600">Nett</th></tr>
+                        <tr><th class="pl-8 py-5 text-[9px] uppercase font-black text-slate-400">Bulan</th><th class="text-center py-5 text-[9px] uppercase font-black text-rose-500">Modal</th><th class="text-right pr-8 py-5 text-[9px] uppercase font-black text-emerald-600">Nett</th></tr>
                     </thead>
-                    <tbody id="profitTableBody"></tbody>
+                    <tbody id="profitTableBody" class="font-bold"></tbody>
                     <tfoot class="bg-slate-950">
                         <tr>
-                            <td class="pl-8 py-10 text-white/30 text-[10px] uppercase tracking-widest font-black">Net Profit 2026</td>
-                            <td colspan="3" id="total-net-profit" class="text-right pr-8 text-white text-3xl font-black italic">RM 0</td>
+                            <td class="pl-8 py-10 text-white/30 text-[10px] uppercase tracking-widest font-black italic">Profit 2026</td>
+                            <td colspan="2" id="total-net-profit" class="text-right pr-8 text-white text-3xl font-black italic">RM 0</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -150,7 +146,7 @@
                 <span class="text-[9px] font-black uppercase tracking-tighter">Invoices</span>
             </button>
             <div class="flex flex-col items-center">
-                <button onclick="openAddModal()" class="grad-dark text-white p-5 rounded-[2.2rem] shadow-2xl -mt-24 border-4 border-white active:rotate-90 transition-all duration-500">
+                <button onclick="openAddModal()" class="grad-dark text-white p-5 rounded-[2.2rem] shadow-2xl -mt-24 border-4 border-white active:scale-75 transition-all duration-300">
                     <i data-lucide="plus" class="w-8 h-8"></i>
                 </button>
             </div>
@@ -169,15 +165,15 @@
         <div class="bg-white rounded-t-[4.5rem] w-full max-h-[96vh] overflow-y-auto p-12 shadow-2xl no-scrollbar">
             <div class="w-20 h-2 bg-slate-100 rounded-full mx-auto mb-10"></div>
             <div class="flex justify-between items-center mb-10">
-                <h2 id="modalTitle" class="text-sm font-black uppercase tracking-[0.5em] text-slate-900 italic">Entry Record</h2>
-                <button onclick="toggleModal(false)" class="p-4 bg-slate-50 rounded-2xl text-slate-900 btn-press"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h2 id="modalTitle" class="text-sm font-black uppercase tracking-[0.5em] text-slate-900 italic">Initiate NX-Record</h2>
+                <button onclick="toggleModal(false)" class="p-4 bg-slate-50 rounded-2xl text-slate-900 btn-press"><i data-lucide="x" class="w-6 h-6 text-slate-900"></i></button>
             </div>
             
             <div class="space-y-8">
                 <input type="hidden" id="editId">
                 <div class="grid grid-cols-2 gap-5 text-gray-900">
-                    <input type="text" id="custName" placeholder="Nama Pelanggan" class="col-span-2 p-6 bg-slate-50 rounded-[2rem] text-sm font-bold outline-none border-2 border-transparent focus:border-red-500/10">
-                    <input type="tel" id="custPhone" placeholder="01x-xxxxxxx" class="p-6 bg-slate-50 rounded-[2rem] text-sm font-bold phone-font outline-none border-2 border-transparent focus:border-red-500/10">
+                    <input type="text" id="custName" placeholder="Nama Pelanggan" class="col-span-2 p-6 bg-slate-50 rounded-[2rem] text-sm font-bold outline-none">
+                    <input type="tel" id="custPhone" placeholder="01x-xxxxxxx" class="p-6 bg-slate-50 rounded-[2rem] text-sm font-bold font-mono outline-none">
                     <select id="warranty" class="p-6 bg-slate-50 rounded-[2rem] text-[11px] font-black uppercase outline-none">
                         <option value="No Warranty">No Warranty</option>
                         <option value="7 Days">7 Hari Waranti</option>
@@ -188,20 +184,20 @@
 
                 <div id="itemRowsContainer" class="space-y-5"></div>
 
-                <button onclick="addRow()" class="w-full py-7 bg-white border-2 border-dashed border-slate-200 rounded-[2.5rem] text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] hover:text-red-500 hover:border-red-200 transition-all">+ New Repair Line</button>
+                <button onclick="addRow()" class="w-full py-7 bg-white border-2 border-dashed border-slate-200 rounded-[2.5rem] text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] hover:text-red-500 hover:border-red-200 transition-all">+ Add Service Line</button>
 
                 <div class="flex justify-between items-center px-6 py-10 border-t border-slate-50 mt-10">
-                    <select id="initialStatus" class="bg-slate-900 text-white p-4 rounded-2xl text-[10px] font-black uppercase">
+                    <select id="initialStatus" class="bg-slate-900 text-white p-4 rounded-2xl text-[10px] font-black uppercase outline-none">
                         <option value="outstanding">UNPAID</option>
                         <option value="paid">PAID</option>
                     </select>
                     <div class="text-right">
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-3">Grand Total</p>
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-3">Total Payable</p>
                         <p class="text-4xl font-black text-slate-900 italic leading-none">RM <span id="grandTotal">0.00</span></p>
                     </div>
                 </div>
 
-                <button onclick="saveAndGenerate()" id="btnSave" class="w-full grad-save text-white py-7 rounded-[2.5rem] font-black uppercase text-sm tracking-[0.4em] shadow-2xl shadow-red-200 btn-press">Execute Sync</button>
+                <button onclick="saveAndGenerate()" id="btnSave" class="w-full grad-save text-white py-7 rounded-[2.5rem] font-black uppercase text-sm tracking-[0.4em] shadow-2xl btn-press">Execute Sync</button>
             </div>
         </div>
     </div>
@@ -212,14 +208,14 @@
             <p id="actionTargetName" class="text-center font-black text-xl uppercase text-slate-900 mb-10 italic tracking-tighter"></p>
             
             <div class="p-8 bg-slate-50 rounded-[3rem] mb-6 border border-white text-slate-900">
-                <label class="text-[10px] font-black uppercase text-slate-400 block mb-4 tracking-[0.2em]">Live Repair Flow</label>
+                <label class="text-[10px] font-black uppercase text-slate-400 block mb-4 tracking-[0.2em]">Flow: Received → Waiting → Diagnosis → Repairing → Ready → Collected</label>
                 <select id="updateRepairStatus" onchange="updateLiveStatus(activeId, this.value)" class="w-full bg-white border border-slate-100 rounded-[1.5rem] p-5 text-sm font-black outline-none shadow-sm">
-                    <option value="Waiting">0. Waiting List</option>
                     <option value="Received">1. Received</option>
-                    <option value="Diagnosis">2. Diagnosis</option>
-                    <option value="Repairing">3. Repairing</option>
-                    <option value="Ready">4. Ready for Pickup</option>
-                    <option value="Collected">5. Collected</option>
+                    <option value="Waiting">2. Waiting List</option>
+                    <option value="Diagnosis">3. Diagnosis</option>
+                    <option value="Repairing">4. Repairing</option>
+                    <option value="Ready">5. Ready for Pickup</option>
+                    <option value="Collected">6. Collected</option>
                 </select>
             </div>
 
@@ -258,15 +254,14 @@
             return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
         }
 
+        // --- NAVIGATION ---
         function showPage(p) {
             localStorage.setItem('naszex_active_page', p);
             ['dashboardView', 'reportsView', 'profitView'].forEach(v => document.getElementById(v).classList.add('view-hidden'));
             document.getElementById(p + 'View').classList.remove('view-hidden');
-            
             const navMap = {dashboard: 'nav-dash', reports: 'nav-report', profit: 'nav-profit'};
             Object.values(navMap).forEach(id => document.getElementById(id).classList.replace('text-red-600', 'text-slate-400'));
             document.getElementById(navMap[p]).classList.replace('text-slate-400', 'text-red-600');
-
             if(p === 'dashboard') updateDashboard();
             if(p === 'reports') generateReport();
             if(p === 'profit') generateProfitReport();
@@ -300,12 +295,13 @@
             updateDashboard();
         }
 
+        // --- LOGIC ---
         function createItemRow(d = {}) {
             return `
                 <div class="item-entry bg-white p-6 rounded-[2.5rem] border border-slate-50 shadow-sm space-y-5 relative text-gray-900">
                     <button onclick="this.parentElement.remove(); calculateTotal();" class="absolute top-4 right-4 text-rose-400 active:scale-75 transition-transform"><i data-lucide="minus-circle" class="w-6 h-6"></i></button>
-                    <input type="text" class="item-name w-full bg-transparent font-black text-[13px] outline-none border-b border-slate-50 pb-3" placeholder="Description (cth: LCD iPhone 13 Pro Max)" value="${d.name || ''}">
-                    <input type="text" class="item-desc w-full bg-transparent text-[11px] text-slate-400 outline-none" placeholder="IMEI / Serial / Component Code" value="${d.desc || ''}">
+                    <input type="text" class="item-name w-full bg-transparent font-black text-[13px] outline-none border-b border-slate-50 pb-3" placeholder="Service / Replacement Part" value="${d.name || ''}">
+                    <input type="text" class="item-desc w-full bg-transparent text-[11px] text-slate-400 outline-none" placeholder="Details / Serial" value="${d.desc || ''}">
                     <div class="grid grid-cols-4 gap-4 pt-2">
                         <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Qty</label><input type="number" oninput="calculateTotal()" class="qty w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px]" value="${d.qty || 1}"></div>
                         <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Sell</label><input type="number" step="0.01" oninput="calculateTotal()" class="kos w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px]" value="${d.kos || ''}"></div>
@@ -339,15 +335,14 @@
             const data = { customerName: n, customerPhone: p, warranty: war, status: st, total: document.getElementById('grandTotal').innerText, items: items };
             
             try { 
-                if(ed) { 
-                    await db.collection("invoices").doc(ed).update(data); 
-                } else {
+                if(ed) { await db.collection("invoices").doc(ed).update(data); } 
+                else {
                     const lastNo = allInvoices.reduce((max, inv) => {
                         const num = parseInt(inv.invoiceNo?.replace('NX-', '') || 0);
                         return num > max ? num : max;
                     }, 0);
                     data.invoiceNo = "NX-" + (lastNo + 1).toString().padStart(4, '0');
-                    data.repairStatus = 'Waiting';
+                    data.repairStatus = 'Received'; // Default Start
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     if(st === 'paid') data.paidAt = data.createdAt;
                     await db.collection("invoices").add(data); 
@@ -361,6 +356,7 @@
             catch(e) { console.error(e); }
         }
 
+        // --- DASHBOARD RENDER ---
         function updateDashboard(search = "") {
             const container = document.getElementById('invoiceContainer'), now = new Date();
             let mPaid = 0, mPending = 0, mJobs = 0;
@@ -376,18 +372,21 @@
             if(currentFilter !== 'all') filtered = filtered.filter(i => i.status === currentFilter);
             if(search) { const q = search.toLowerCase(); filtered = filtered.filter(i => (i.customerName||"").toLowerCase().includes(q) || (i.customerPhone||"").includes(q)); }
 
-            container.innerHTML = filtered.length ? '' : '<div class="py-24 text-center text-slate-300 text-[11px] font-black uppercase tracking-[0.5em] italic">NX CLOUD: NO RECORDS FOUND</div>';
+            container.innerHTML = filtered.length ? '' : '<div class="py-24 text-center text-slate-300 text-[11px] font-black uppercase tracking-[0.5em] italic italic">NX CLOUD: NO RECORDS FOUND</div>';
             
             filtered.forEach(inv => {
                 const isPaid = inv.status === 'paid';
                 const cardBg = isPaid ? 'bg-emerald-600' : 'bg-rose-600';
                 
+                // Color Logic for Status Pulse
                 let pClass = "";
-                if(inv.repairStatus === 'Waiting') pClass = "pulse-waiting bg-amber-400";
-                else if(inv.repairStatus === 'Received') pClass = "bg-rose-400";
-                else if(inv.repairStatus === 'Repairing') pClass = "pulse-repairing bg-blue-400";
-                else if(inv.repairStatus === 'Ready') pClass = "bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]";
-                else pClass = "bg-slate-400 opacity-50";
+                const s = inv.repairStatus || 'Received';
+                if(s === 'Received') pClass = "p-indigo bg-indigo-400";
+                else if(s === 'Waiting') pClass = "p-amber bg-amber-400";
+                else if(s === 'Diagnosis') pClass = "p-purple bg-purple-400";
+                else if(s === 'Repairing') pClass = "p-blue bg-blue-400";
+                else if(s === 'Ready') pClass = "bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]";
+                else pClass = "bg-slate-500 opacity-50";
 
                 container.insertAdjacentHTML('beforeend', `
                     <div onclick="openActionMenu('${inv.id}', '${(inv.customerName||"").replace(/'/g, "\\'")}')" class="${cardBg} px-7 py-5 rounded-[2.5rem] flex items-center justify-between text-white transition-all card-press shadow-2xl shadow-black/10 border-b-4 border-black/15">
@@ -398,7 +397,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <span class="text-[8px] font-black uppercase bg-black/20 px-2.5 py-1 rounded-lg tracking-widest">${inv.invoiceNo || 'NX-XXXX'}</span>
-                                <p class="text-[10px] font-bold phone-font text-white/70">${inv.customerPhone || '---'}</p>
+                                <p class="text-[10px] font-bold font-mono text-white/70">${inv.customerPhone || '---'}</p>
                             </div>
                         </div>
                         <div class="text-right">
@@ -411,14 +410,14 @@
             lucide.createIcons();
         }
 
-        // --- REPORT GENERATORS ---
+        // --- REPORTING ---
         function generateReport() {
             const tb = document.getElementById('reportTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
             let h = "";
             mo.forEach((m, i) => {
                 const monthly = allInvoices.filter(inv => { const d = new Date(inv.createdAt?.seconds * 1000 || Date.now()); return d.getMonth() === i && d.getFullYear() === 2026; });
                 const pS = monthly.reduce((s, inv) => inv.status === 'paid' ? s + parseFloat(inv.total) : s, 0);
-                h += `<tr><td class="pl-8 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center font-black">${new Set(monthly.map(v => v.customerPhone)).size}</td><td class="text-center font-black">${monthly.length}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(pS)}</td></tr>`;
+                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-8 py-5 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center font-black">${monthly.length}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(pS)}</td></tr>`;
             });
             tb.innerHTML = h;
         }
@@ -431,7 +430,7 @@
                 let mModal = 0, mRev = 0;
                 monthly.forEach(inv => { mRev += parseFloat(inv.total); (inv.items || []).forEach(it => { mModal += (parseFloat(it.modal)||0) * (parseFloat(it.qty)||1); }); });
                 const mProfit = mRev - mModal; totalNett += mProfit;
-                h += `<tr><td class="pl-8 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center text-rose-500 font-black">RM ${Math.round(mModal)}</td><td class="text-center text-blue-600 font-black">RM ${Math.round(mRev)}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(mProfit)}</td></tr>`;
+                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-8 py-5 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center text-rose-500 font-black">RM ${Math.round(mModal)}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(mProfit)}</td></tr>`;
             });
             tb.innerHTML = h; document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
         }
