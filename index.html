@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+    
     <title>NASZEX CLOUD - RMS FINAL v7.1</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -388,6 +395,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
     <script>
+        // PWA REGISTER
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg.scope))
+                    .catch(err => console.log('SW Fail:', err));
+            });
+        }
+
         const firebaseConfig = { 
             apiKey: "AIzaSyCSg9tH4E-71u8b3oFf5j9pDvhoNHZYnZg", 
             authDomain: "invoicely-52db9.firebaseapp.com", 
@@ -402,7 +418,6 @@
         let allInvoices = [], currentFilter = 'all', activeId = null;
         let searchTimeout = null;
 
-        // --- MAP DESKRIPSI UNTUK LIVE TRACKER ---
         const statusDescriptions = {
             'Received': 'Peranti diterima, menunggu giliran.',
             'Waiting': 'Dalam senarai menunggu (Queue).',
@@ -451,12 +466,10 @@
             lucide.createIcons();
         }
 
-        // --- PERFORMANCE UPGRADE: Limit Query & Async ---
         async function refreshData() {
             const btnIcon = document.getElementById('refresh-icon');
             btnIcon.classList.add('animate-spin');
             try {
-                // LOAD 50 REKOD SAHAJA UNTUK SPEED
                 const s = await db.collection("invoices").orderBy("createdAt", "desc").limit(50).get();
                 allInvoices = s.docs.map(d => ({id: d.id, ...d.data()}));
                 updateDashboard();
@@ -562,12 +575,11 @@
             showToast("PDF Generated");
         }
 
-        // --- DEBOUNCE SEARCH (Speed Upgrade) ---
         function handleSearch() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 updateDashboard(document.getElementById('searchInput').value);
-            }, 300); // Tunggu 300ms sebelum search
+            }, 300);
         }
 
         function updateDashboard(search = "") {
@@ -603,7 +615,6 @@
                 const statusColor = isPaid ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700';
                 const repairMap = {'Received':'bg-slate-200','Waiting':'bg-amber-200','Diagnosis':'bg-purple-200','Repairing':'bg-blue-200','Ready':'bg-emerald-400 animate-pulse','Collected':'bg-slate-800 text-white'};
                 
-                // Limit animation delay to first 10 items for performance
                 const delay = index < 10 ? index * 0.05 : 0; 
                 
                 container.insertAdjacentHTML('beforeend', `
@@ -645,7 +656,6 @@
                 if(s === match.repairStatus) passed = false;
                 const active = passed || s === match.repairStatus;
                 
-                // Add Descriptions Here
                 const desc = statusDescriptions[s] || 'Status update';
                 
                 h += `
@@ -686,7 +696,6 @@
                 if(editId) { 
                     await db.collection("invoices").doc(editId).update(data); 
                     showToast("Rekod Dikemaskini");
-                    // Update local data immediately for speed without refetch
                     const idx = allInvoices.findIndex(x => x.id === editId);
                     if(idx !== -1) allInvoices[idx] = { ...allInvoices[idx], ...data };
                 }
@@ -695,11 +704,10 @@
                     data.invoiceNo = "NX-" + (lastNo + 1).toString().padStart(4, '0');
                     data.repairStatus = 'Received'; data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     const docRef = await db.collection("invoices").add(data);
-                    // Add to local immediately
                     allInvoices.unshift({ id: docRef.id, ...data });
                     showToast("Job Sheet Dicipta");
                 }
-                updateDashboard(); // Refresh UI only
+                updateDashboard();
                 toggleModal(false);
             } catch(e) { console.error(e); showToast("Ralat Sistem", "error"); }
             btn.innerHTML = `Simpan <i data-lucide="check" class="w-4 h-4"></i>`;
@@ -726,9 +734,8 @@
             document.getElementById('actionTargetName').innerText = i.customerName;
             document.getElementById('updateRepairStatus').value = i.repairStatus || 'Received';
             
-            // --- SMART PAYMENT TOGGLE LOGIC ---
             const btn = document.getElementById('btnToggleStatus');
-            btn.onclick = null; // Clear old listener
+            btn.onclick = null;
 
             if (i.status === 'paid') {
                 btn.className = "col-span-2 p-4 bg-slate-50 text-slate-700 border border-slate-200 rounded-2xl font-black text-[10px] uppercase shadow-sm tap-effect flex justify-between items-center px-6 transition-all";
@@ -757,7 +764,6 @@
         
         async function updateLiveStatus(id, val) { 
             await db.collection("invoices").doc(id).update({repairStatus: val}); 
-            // Update local state
             const i = allInvoices.find(x=>x.id===id); if(i) i.repairStatus = val;
             updateDashboard();
             showToast(`Status: ${val}`); 
@@ -771,7 +777,6 @@
         }
         function formatDate(ts, full=false) { if(!ts) return '--/--'; const d = ts.toDate ? ts.toDate() : new Date(ts); return full ? `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}` : `${d.getDate()}/${d.getMonth()+1}`; }
 
-        // Reports Logic
         function openSubReport(t) {
             document.getElementById('dataMenu').classList.add('hidden');
             if(t==='performance'){ document.getElementById('performanceContainer').classList.remove('hidden'); generateReport(); }
@@ -823,7 +828,7 @@
             }
             if(type === 'delete' && confirm("Hapus rekod ini?")) { 
                 db.collection("invoices").doc(activeId).delete(); 
-                allInvoices = allInvoices.filter(x=>x.id !== activeId); // Remove local
+                allInvoices = allInvoices.filter(x=>x.id !== activeId);
                 updateDashboard();
                 showToast("Rekod Dihapus"); 
             }
@@ -831,8 +836,6 @@
             closeActionMenu();
         }
 
-        // AUTO LOAD
-        // Gunakan onSnapshot untuk real-time update tapi limit query
         db.collection("invoices").orderBy("createdAt", "desc").limit(50).onSnapshot(s => {
             allInvoices = s.docs.map(d=>({id:d.id, ...d.data()}));
             updateDashboard();
