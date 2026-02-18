@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>NASZEX CLOUD - RMS ENTERPRISE v5.2</title>
+    <title>NASZEX CLOUD - RMS ULTIMATE v6.0</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     
@@ -31,59 +30,77 @@
         
         .font-num { font-family: 'Inter', sans-serif; }
 
-        /* Snappy Transitions */
+        /* --- 90Hz SMOOTH ENGINE --- */
+        
+        /* GPU Acceleration Utility */
+        .gpu { transform: translate3d(0,0,0); backface-visibility: hidden; perspective: 1000px; }
+
+        /* Spring Animation for Modal */
         .modal-wrapper {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
-            transform: translateY(100%); opacity: 0; pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            transform: translateY(110%) scale(0.95); opacity: 0; pointer-events: none;
         }
-        .modal-wrapper.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        
-        .view-section { display: none; opacity: 0; }
-        .view-section.active { display: block; opacity: 1; animation: fadeIn 0.2s ease-out; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.99); } to { opacity: 1; transform: scale(1); } }
+        .modal-wrapper.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
-        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
-        .tab-active { background: #0f172a !important; color: #fff !important; }
+        /* Page Transitions */
+        .view-section { display: none; opacity: 0; transform: scale(0.98); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .view-section.active { display: block; opacity: 1; transform: scale(1); }
+
+        /* Staggered List Animation */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .list-item-anim { animation: slideUpFade 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+
+        /* Micro-Interactions */
+        .tap-effect { transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tap-effect:active { transform: scale(0.94); }
+
+        /* Glass UI Polish */
+        .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); }
         
-        .grad-dark { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
-        .grad-green { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
-        .grad-red { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
-        
-        input, select, textarea { font-size: 16px !important; } 
+        /* Tab Active State */
+        .tab-active { background: #0f172a !important; color: #fff !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); transform: translateY(-1px); }
+
+        /* Toast Notification */
+        #toast-container { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); color: white; padding: 12px 24px; rounded: 99px; font-size: 11px; font-weight: 700; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; transform: translateY(-20px); pointer-events: auto; display: flex; items-center: center; gap: 8px; }
+        .toast.out { animation: toastOut 0.3s ease forwards; }
+        @keyframes toastIn { to { opacity: 1; transform: translateY(0); } }
+        @keyframes toastOut { to { opacity: 0; transform: translateY(-20px) scale(0.9); } }
+
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        
+        /* Custom Scrollbar hide */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Bottom Nav Styling */
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-        .nav-btn:active { transform: scale(0.9); }
-
-        /* Timeline Tracker */
-        .timeline-item { position: relative; padding-left: 28px; padding-bottom: 24px; border-left: 2px solid #e2e8f0; }
-        .timeline-item:last-child { border-left: 2px solid transparent; }
-        .timeline-dot { position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; box-shadow: 0 0 0 2px #fff; }
-        .timeline-item.active .timeline-dot { background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
-        .timeline-item.active { border-left-color: #10b981; }
-
-        /* Custom Input Groups */
-        .float-input-group { position: relative; width: 100%; }
-        .float-input-group label { position: absolute; top: 4px; left: 12px; font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; pointer-events: none; }
-        .float-input-group input, .float-input-group select { padding-top: 20px; padding-bottom: 8px; }
+        /* Inputs */
+        .float-input-group { position: relative; width: 100%; transition: 0.3s; }
+        .float-input-group:focus-within { transform: translateY(-1px); }
+        .float-input-group label { position: absolute; top: 6px; left: 14px; font-size: 9px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; pointer-events: none; }
+        .float-input-group input, .float-input-group select { padding-top: 22px; padding-bottom: 10px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .float-input-group input:focus, .float-input-group select:focus { border-color: #94a3b8; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
     </style>
 </head>
-<body class="min-h-screen pb-24">
+<body class="min-h-screen pb-28 bg-[#f8fafc]">
 
-    <nav class="sticky top-0 z-40 glass-nav px-5 py-3">
+    <div id="toast-container"></div>
+
+    <nav class="sticky top-0 z-40 glass-nav px-5 py-3 gpu">
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-slate-950 rounded-xl flex items-center justify-center shadow-lg">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-slate-900/10 tap-effect">
                     <span class="text-white font-black text-[12px] italic">NX</span>
                 </div>
                 <div>
                     <h1 class="text-[12px] font-black italic uppercase tracking-[0.2em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
-                    <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none">RMS Enterprise v5.2</p>
+                    <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none pl-0.5">RMS Ultimate v6.0</p>
                 </div>
             </div>
-            <button onclick="refreshData()" class="w-10 h-10 flex items-center justify-center bg-slate-50 rounded-xl text-slate-400 border border-slate-200 active:scale-90 transition-all">
+            <button onclick="refreshData()" class="w-10 h-10 flex items-center justify-center bg-white rounded-xl text-slate-400 border border-slate-200 tap-effect shadow-sm">
                 <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
             </button>
         </div>
@@ -91,55 +108,56 @@
 
     <div class="max-w-md mx-auto p-4 space-y-6">
         
-        <main id="dashboardView" class="view-section active space-y-6">
+        <main id="dashboardView" class="view-section active space-y-5">
             <div class="grid grid-cols-3 gap-3">
-                <div class="grad-green rounded-2xl p-4 shadow-lg text-center relative overflow-hidden">
+                <div class="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 text-center relative overflow-hidden tap-effect">
                     <p class="text-[14px] font-black text-white font-num">RM <span id="stat-month-paid">0</span></p>
                     <p class="text-[7px] font-bold text-emerald-100 uppercase mt-1 tracking-widest">Paid</p>
                 </div>
-                <div class="grad-red rounded-2xl p-4 shadow-lg text-center relative overflow-hidden">
+                <div class="bg-gradient-to-br from-rose-500 to-rose-700 rounded-2xl p-4 shadow-lg shadow-rose-500/20 text-center relative overflow-hidden tap-effect">
                     <p class="text-[14px] font-black text-white font-num">RM <span id="stat-month-pending">0</span></p>
                     <p class="text-[7px] font-bold text-rose-100 uppercase mt-1 tracking-widest">Unpaid</p>
                 </div>
-                <div class="bg-slate-900 rounded-2xl p-4 shadow-lg text-center relative overflow-hidden">
+                <div class="bg-gradient-to-br from-slate-800 to-slate-950 rounded-2xl p-4 shadow-lg shadow-slate-900/20 text-center relative overflow-hidden tap-effect">
                     <p class="text-[14px] font-black text-white font-num"><span id="stat-month-jobs">0</span></p>
                     <p class="text-[7px] font-bold text-slate-400 uppercase mt-1 tracking-widest">Jobs</p>
                 </div>
             </div>
 
-            <div class="relative">
-                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="SEARCH CUSTOMER / INVOICE..." 
-                       class="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold shadow-sm outline-none focus:ring-2 focus:ring-slate-900/5 transition-all">
-                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+            <div class="relative group">
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="SEARCH RECORD..." 
+                       class="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold shadow-sm outline-none focus:ring-2 focus:ring-slate-900/5 transition-all font-num tracking-wide">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-slate-900"></i>
             </div>
 
-            <div class="flex p-1 bg-slate-200/50 rounded-xl gap-1">
-                <button onclick="filterInvoices('all')" id="f-all" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase transition-all tab-active">Semua</button>
-                <button onclick="filterInvoices('paid')" id="f-paid" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase transition-all text-slate-400">Paid</button>
-                <button onclick="filterInvoices('outstanding')" id="f-pending" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase transition-all text-slate-400">Unpaid</button>
+            <div class="flex p-1.5 bg-slate-200/50 rounded-2xl gap-1.5 backdrop-blur-md">
+                <button onclick="filterInvoices('all')" id="f-all" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all tab-active tap-effect">Semua</button>
+                <button onclick="filterInvoices('paid')" id="f-paid" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all text-slate-400 hover:text-slate-600 tap-effect">Paid</button>
+                <button onclick="filterInvoices('outstanding')" id="f-pending" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all text-slate-400 hover:text-slate-600 tap-effect">Unpaid</button>
             </div>
 
-            <div id="invoiceContainer" class="space-y-3 pb-8"></div>
+            <div id="invoiceContainer" class="space-y-3 pb-8 min-h-[50vh]">
+                </div>
         </main>
 
         <main id="reportsView" class="view-section">
             <div id="dataMenu" class="space-y-4 pt-2">
-                <button onclick="openSubReport('performance')" class="w-full bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between active:scale-95 transition-all">
+                <button onclick="openSubReport('performance')" class="w-full bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex items-center justify-between tap-effect">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center"><i data-lucide="bar-chart-2"></i></div>
                         <div class="text-left">
                             <h3 class="text-sm font-black uppercase text-slate-900">Performance</h3>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Jobs & Volume</p>
+                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Job Volume & Trends</p>
                         </div>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300"></i>
                 </button>
-                <button onclick="openSubReport('profit')" class="w-full bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between active:scale-95 transition-all">
+                <button onclick="openSubReport('profit')" class="w-full bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex items-center justify-between tap-effect">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center"><i data-lucide="trending-up"></i></div>
                         <div class="text-left">
                             <h3 class="text-sm font-black uppercase text-slate-900">Profit Analysis</h3>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Revenue vs Cost</p>
+                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Revenue vs Cost</p>
                         </div>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300"></i>
@@ -147,11 +165,11 @@
             </div>
 
             <div id="performanceContainer" class="hidden">
-                <button onclick="closeSubReport()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400"><i data-lucide="arrow-left" class="w-3 h-3"></i> Kembali</button>
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <button onclick="closeSubReport()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 tap-effect"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
+                <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <table class="w-full text-left">
-                        <thead class="bg-slate-50 border-b">
-                            <tr><th class="pl-6 py-4 text-[9px] font-black uppercase text-slate-400">Bulan</th><th class="text-center text-[9px] font-black uppercase text-slate-400">Jobs</th><th class="pr-6 text-right text-[9px] font-black uppercase text-slate-400">Total</th></tr>
+                        <thead class="bg-slate-50 border-b border-slate-100">
+                            <tr><th class="pl-6 py-4 text-[9px] font-black uppercase text-slate-400">Month</th><th class="text-center text-[9px] font-black uppercase text-slate-400">Jobs</th><th class="pr-6 text-right text-[9px] font-black uppercase text-slate-400">Total</th></tr>
                         </thead>
                         <tbody id="reportTableBody" class="text-slate-800 text-[11px] font-bold font-num"></tbody>
                     </table>
@@ -159,11 +177,11 @@
             </div>
 
             <div id="profitContainer" class="hidden">
-                <button onclick="closeSubReport()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400"><i data-lucide="arrow-left" class="w-3 h-3"></i> Kembali</button>
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <button onclick="closeSubReport()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 tap-effect"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
+                <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                      <table class="w-full text-left">
-                        <thead class="bg-slate-50 border-b">
-                            <tr><th class="pl-6 py-4 text-[9px] font-black uppercase text-slate-400">Bulan</th><th class="text-center text-[9px] font-black uppercase text-rose-400">Kos</th><th class="pr-6 text-right text-[9px] font-black uppercase text-emerald-500">Nett</th></tr>
+                        <thead class="bg-slate-50 border-b border-slate-100">
+                            <tr><th class="pl-6 py-4 text-[9px] font-black uppercase text-slate-400">Month</th><th class="text-center text-[9px] font-black uppercase text-rose-400">Cost</th><th class="pr-6 text-right text-[9px] font-black uppercase text-emerald-500">Nett</th></tr>
                         </thead>
                         <tbody id="profitTableBody" class="text-[11px] font-bold font-num"></tbody>
                         <tfoot class="bg-slate-900 text-white font-num">
@@ -176,22 +194,22 @@
 
         <main id="toolsView" class="view-section">
             <div id="toolsMenu" class="space-y-4 pt-2">
-                <button onclick="openSubTool('receipt')" class="w-full bg-slate-900 p-6 rounded-3xl shadow-xl text-white flex items-center justify-between active:scale-95 transition-all">
+                <button onclick="openSubTool('receipt')" class="w-full bg-slate-900 p-6 rounded-[2rem] shadow-xl shadow-slate-900/20 text-white flex items-center justify-between tap-effect">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center"><i data-lucide="printer"></i></div>
                         <div class="text-left">
                             <h3 class="text-sm font-black uppercase">Smart Receipt</h3>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">PDF & WhatsApp</p>
+                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">PDF & WhatsApp</p>
                         </div>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-white/20"></i>
                 </button>
-                <button onclick="openSubTool('track')" class="w-full bg-white border border-slate-200 p-6 rounded-3xl shadow-sm text-slate-900 flex items-center justify-between active:scale-95 transition-all">
+                <button onclick="openSubTool('track')" class="w-full bg-white border border-slate-200 p-6 rounded-[2rem] shadow-sm text-slate-900 flex items-center justify-between tap-effect">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center"><i data-lucide="radar"></i></div>
                         <div class="text-left">
                             <h3 class="text-sm font-black uppercase">Live Tracker</h3>
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Trace by Phone</p>
+                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Trace by Phone</p>
                         </div>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300"></i>
@@ -199,30 +217,30 @@
             </div>
 
             <div id="toolReceiptContainer" class="hidden">
-                <button onclick="closeSubTool()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
+                <button onclick="closeSubTool()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 tap-effect"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
                 <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100 text-center space-y-6">
                     <div class="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg"><i data-lucide="printer"></i></div>
                     <div class="space-y-4">
                          <div class="float-input-group text-left">
-                            <input type="tel" id="toolReceiptPhone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 font-bold outline-none font-num">
+                            <input type="tel" id="toolReceiptPhone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 font-bold outline-none font-num rounded-2xl">
                             <label>No. Telefon Pelanggan</label>
                          </div>
-                         <div class="grid grid-cols-1 gap-2">
-                            <button onclick="handleTools('whatsapp')" class="w-full bg-[#25D366] text-white p-4 rounded-xl font-black uppercase text-[10px] flex items-center justify-center gap-2 active:scale-95"><i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp</button>
-                            <button onclick="handleTools('pdf')" class="w-full bg-slate-800 text-white p-4 rounded-xl font-black uppercase text-[10px] flex items-center justify-center gap-2 active:scale-95"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+                         <div class="grid grid-cols-1 gap-3">
+                            <button onclick="handleTools('whatsapp')" class="w-full bg-[#25D366] text-white p-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 tap-effect shadow-lg shadow-green-500/20"><i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp</button>
+                            <button onclick="handleTools('pdf')" class="w-full bg-slate-800 text-white p-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 tap-effect shadow-lg"><i data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
                          </div>
                     </div>
                 </div>
             </div>
 
             <div id="toolTrackContainer" class="hidden">
-                <button onclick="closeSubTool()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
+                <button onclick="closeSubTool()" class="mb-4 flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 tap-effect"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back</button>
                 <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border border-slate-100 space-y-6">
                      <div class="relative">
                         <input type="tel" id="toolTrackPhone" placeholder="Masukkan No. Phone..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 pr-20 text-sm font-bold outline-none font-num">
-                        <button onclick="trackStatus()" class="absolute right-2 top-2 bottom-2 bg-orange-500 text-white px-4 rounded-xl font-bold text-[10px] uppercase active:scale-95">Check</button>
+                        <button onclick="trackStatus()" class="absolute right-2 top-2 bottom-2 bg-orange-500 text-white px-5 rounded-xl font-bold text-[10px] uppercase tap-effect">Check</button>
                      </div>
-                     <div id="trackResult" class="hidden">
+                     <div id="trackResult" class="hidden fade-enter">
                          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-6">
                              <div class="flex justify-between items-start">
                                  <h4 id="trName" class="font-black text-xs uppercase text-slate-900"></h4>
@@ -241,53 +259,53 @@
         </main>
     </div>
 
-    <div class="fixed bottom-0 left-0 right-0 z-40 glass-nav px-6 py-3 safe-bottom">
+    <div class="fixed bottom-0 left-0 right-0 z-40 glass-nav px-6 py-3 safe-bottom gpu">
         <div class="max-w-md mx-auto grid grid-cols-4 items-center">
-            <button onclick="showPage('dashboard')" id="nav-dash" class="nav-btn text-red-600">
+            <button onclick="showPage('dashboard')" id="nav-dash" class="nav-btn text-red-600 tap-effect">
                 <i data-lucide="home" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase">Home</span>
+                <span class="text-[9px] font-black uppercase tracking-tight">Home</span>
             </button>
-            <button onclick="openAddModal()" class="nav-btn text-slate-400">
-                <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center shadow-lg">
+            <button onclick="openAddModal()" class="nav-btn text-slate-400 tap-effect group">
+                <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center shadow-lg shadow-slate-900/30 group-active:scale-90 transition-transform">
                     <i data-lucide="plus" class="w-6 h-6"></i>
                 </div>
-                <span class="text-[9px] font-black uppercase mt-1">Add Job</span>
+                <span class="text-[9px] font-black uppercase mt-1 tracking-tight text-slate-900">Add Job</span>
             </button>
-            <button onclick="showPage('reports')" id="nav-report" class="nav-btn text-slate-400">
+            <button onclick="showPage('reports')" id="nav-report" class="nav-btn text-slate-400 tap-effect">
                 <i data-lucide="pie-chart" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase">Data</span>
+                <span class="text-[9px] font-black uppercase tracking-tight">Data</span>
             </button>
-            <button onclick="showPage('tools')" id="nav-tools" class="nav-btn text-slate-400">
+            <button onclick="showPage('tools')" id="nav-tools" class="nav-btn text-slate-400 tap-effect">
                 <i data-lucide="wrench" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase">Tools</span>
+                <span class="text-[9px] font-black uppercase tracking-tight">Tools</span>
             </button>
         </div>
     </div>
 
-    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden modal-wrapper flex flex-col justify-end sm:justify-center">
-        <div class="bg-[#f8fafc] w-full max-w-md mx-auto h-[92vh] sm:h-[85vh] sm:rounded-3xl rounded-t-3xl shadow-2xl flex flex-col overflow-hidden relative">
-            <div class="px-6 py-5 bg-white border-b flex justify-between items-center shrink-0">
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden modal-wrapper flex flex-col justify-end sm:justify-center gpu">
+        <div class="bg-[#f8fafc] w-full max-w-md mx-auto h-[92vh] sm:h-[85vh] sm:rounded-3xl rounded-t-[2.5rem] shadow-2xl flex flex-col overflow-hidden relative">
+            <div class="px-6 py-5 bg-white/80 backdrop-blur-md border-b border-slate-100 flex justify-between items-center shrink-0 sticky top-0 z-10">
                 <div>
                     <h2 id="modalTitle" class="text-sm font-black uppercase text-slate-900">Initiate Job</h2>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Maklumat Pembaikan</p>
                 </div>
-                <button onclick="toggleModal(false)" class="w-8 h-8 bg-slate-50 rounded-full flex items-center justify-center text-slate-400"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <button onclick="toggleModal(false)" class="w-9 h-9 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 border border-slate-100 tap-effect"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
             
-            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
                 <input type="hidden" id="editId">
-                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">
+                <div class="bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 space-y-4">
                     <div class="float-input-group">
-                        <input type="text" id="custName" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 font-bold outline-none focus:bg-white transition-colors">
+                        <input type="text" id="custName" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold outline-none focus:bg-white transition-colors">
                         <label>Nama Pelanggan</label>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="float-input-group">
-                            <input type="tel" id="custPhone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 font-bold outline-none font-num">
+                            <input type="tel" id="custPhone" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold outline-none font-num">
                             <label>No. Phone</label>
                         </div>
                         <div class="float-input-group">
-                            <select id="warranty" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 font-bold outline-none">
+                            <select id="warranty" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 font-bold outline-none">
                                 <option value="No Warranty">No Warranty</option>
                                 <option value="3 Hari">3 Hari</option>
                                 <option value="1 Minggu">1 Minggu</option>
@@ -299,9 +317,9 @@
                 </div>
 
                 <div class="space-y-3">
-                    <div class="flex justify-between items-end">
-                        <h4 class="text-[9px] font-black text-slate-400 uppercase">Item Pembaikan</h4>
-                        <button onclick="addRow()" class="text-[9px] font-bold text-white bg-slate-900 px-3 py-1.5 rounded-lg uppercase tracking-wide active:scale-95 shadow-md">
+                    <div class="flex justify-between items-end px-1">
+                        <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Item Pembaikan</h4>
+                        <button onclick="addRow()" class="text-[9px] font-bold text-white bg-slate-900 px-4 py-2 rounded-xl uppercase tracking-wide tap-effect shadow-md">
                             + Item
                         </button>
                     </div>
@@ -309,9 +327,9 @@
                 </div>
             </div>
 
-            <div class="p-5 bg-white border-t shrink-0 safe-bottom">
+            <div class="p-5 bg-white border-t border-slate-100 shrink-0 safe-bottom">
                 <div class="flex justify-between items-center mb-4">
-                    <select id="initialStatus" class="bg-slate-100 text-slate-700 py-2 px-3 rounded-lg text-[10px] font-black uppercase outline-none">
+                    <select id="initialStatus" class="bg-slate-100 text-slate-700 py-2 px-3 rounded-xl text-[10px] font-black uppercase outline-none">
                         <option value="outstanding">Unpaid</option>
                         <option value="paid">Paid</option>
                     </select>
@@ -320,15 +338,15 @@
                         <p class="text-2xl font-black text-slate-900 italic font-num">RM <span id="grandTotal">0.00</span></p>
                     </div>
                 </div>
-                <button onclick="saveAndGenerate()" id="btnSave" class="w-full grad-dark text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest shadow-xl flex items-center justify-center gap-2">
+                <button onclick="saveAndGenerate()" id="btnSave" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-xl shadow-slate-900/20 tap-effect flex items-center justify-center gap-2">
                     Simpan Rekod <i data-lucide="check" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden modal-wrapper flex flex-col justify-end">
-        <div class="bg-white rounded-t-3xl w-full p-6 pb-10 shadow-2xl space-y-5 safe-bottom">
+    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden modal-wrapper flex flex-col justify-end gpu">
+        <div class="bg-white rounded-t-[2.5rem] w-full p-6 pb-10 shadow-2xl space-y-5 safe-bottom">
             <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto"></div>
             <div class="text-center">
                  <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Tindakan Untuk</p>
@@ -336,7 +354,7 @@
             </div>
             
             <div class="bg-slate-50 p-1 rounded-2xl border border-slate-200">
-                <select id="updateRepairStatus" onchange="updateLiveStatus(activeId, this.value)" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-black outline-none shadow-sm">
+                <select id="updateRepairStatus" onchange="updateLiveStatus(activeId, this.value)" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-black outline-none shadow-sm text-slate-700">
                     <option value="Received">1. Received</option>
                     <option value="Waiting">2. Waiting</option>
                     <option value="Diagnosis">3. Diagnosis</option>
@@ -347,20 +365,20 @@
             </div>
 
             <div class="grid grid-cols-2 gap-3">
-                <button id="btnToggleStatus" class="col-span-2 p-4 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase shadow-lg flex justify-between items-center px-6 active:scale-95">
+                <button id="btnToggleStatus" class="col-span-2 p-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase shadow-lg tap-effect flex justify-between items-center px-6">
                     <span>Tukar Status Bayaran</span><i data-lucide="refresh-ccw" class="w-4 h-4"></i>
                 </button>
-                <button onclick="handleAction('getlink')" class="p-4 bg-blue-50 text-blue-600 rounded-xl font-black text-[9px] uppercase border border-blue-100 flex justify-center items-center gap-2 active:scale-95">
+                <button onclick="handleAction('getlink')" class="p-4 bg-blue-50 text-blue-600 rounded-2xl font-black text-[9px] uppercase border border-blue-100 flex justify-center items-center gap-2 tap-effect">
                     <i data-lucide="link" class="w-4 h-4"></i> Link
                 </button>
-                <button onclick="handleAction('edit')" class="p-4 bg-amber-50 text-amber-600 rounded-xl font-black text-[9px] uppercase border border-amber-100 flex justify-center items-center gap-2 active:scale-95">
+                <button onclick="handleAction('edit')" class="p-4 bg-amber-50 text-amber-600 rounded-2xl font-black text-[9px] uppercase border border-amber-100 flex justify-center items-center gap-2 tap-effect">
                     <i data-lucide="edit-3" class="w-4 h-4"></i> Edit
                 </button>
             </div>
-             <button onclick="handleAction('delete')" class="w-full p-4 text-rose-500 font-black text-[10px] uppercase border border-rose-100 rounded-xl active:scale-95">
+             <button onclick="handleAction('delete')" class="w-full p-4 text-rose-500 font-black text-[10px] uppercase border border-rose-100 rounded-2xl tap-effect">
                 Hapus Rekod
             </button>
-            <button onclick="closeActionMenu()" class="w-full py-3 text-[10px] font-bold text-slate-400 uppercase">Batal</button>
+            <button onclick="closeActionMenu()" class="w-full py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Batal</button>
         </div>
     </div>
 
@@ -381,16 +399,39 @@
 
         let allInvoices = [], currentFilter = 'all', activeId = null;
 
+        // --- TOAST NOTIFICATION SYSTEM ---
+        function showToast(msg, type='success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icon = type === 'success' ? 'check-circle' : 'alert-circle';
+            const color = type === 'success' ? 'text-emerald-400' : 'text-rose-400';
+            toast.className = 'toast';
+            toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 ${color}"></i> <span>${msg}</span>`;
+            container.appendChild(toast);
+            lucide.createIcons();
+            
+            // Haptic vibration
+            if(navigator.vibrate) navigator.vibrate(50);
+
+            setTimeout(() => {
+                toast.classList.add('out');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- NAVIGATION ENGINE ---
         function showPage(p) {
             const views = ['dashboardView', 'reportsView', 'toolsView'];
             views.forEach(v => {
                 const el = document.getElementById(v);
                 el.classList.remove('active');
-                setTimeout(() => { if(!el.classList.contains('active')) el.style.display = 'none'; }, 50);
+                setTimeout(() => { if(!el.classList.contains('active')) el.style.display = 'none'; }, 200);
             });
             const target = document.getElementById(p + 'View');
             target.style.display = 'block';
-            requestAnimationFrame(() => target.classList.add('active'));
+            // Force reflow
+            void target.offsetWidth;
+            target.classList.add('active');
             
             // Icon Reset
             document.getElementById('nav-dash').classList.replace('text-red-600', 'text-slate-400');
@@ -405,20 +446,19 @@
             lucide.createIcons();
         }
 
-        // --- FIXED REFRESH DATA ---
         async function refreshData() {
             const btnIcon = document.getElementById('refresh-icon');
             btnIcon.classList.add('animate-spin');
             
             try {
-                // Force get fresh data
                 const s = await db.collection("invoices").orderBy("createdAt", "desc").get();
                 allInvoices = s.docs.map(d => ({id: d.id, ...d.data()}));
                 updateDashboard();
+                showToast("Data Synced Successfully");
             } catch (error) {
                 console.error("Refresh Error:", error);
+                showToast("Sync Failed", "error");
             } finally {
-                // Ensure spin stops
                 btnIcon.classList.remove('animate-spin');
             }
         }
@@ -435,17 +475,17 @@
 
         function createItemRow(d = {}) {
             return `
-            <div class="item-entry bg-white p-3 rounded-2xl border border-slate-200 relative mb-3 shadow-sm">
-                <button onclick="this.closest('.item-entry').remove(); calculateTotal();" class="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full w-6 h-6 shadow-md border-2 border-white flex items-center justify-center active:scale-90 z-10"><i data-lucide="x" class="w-3 h-3"></i></button>
+            <div class="item-entry bg-white p-3 rounded-2xl border border-slate-200 relative mb-3 shadow-sm list-item-anim">
+                <button onclick="this.closest('.item-entry').remove(); calculateTotal();" class="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full w-6 h-6 shadow-md border-2 border-white flex items-center justify-center tap-effect z-10"><i data-lucide="x" class="w-3 h-3"></i></button>
                 <div class="space-y-2 mb-2">
                     <input type="text" class="item-name w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-bold outline-none focus:bg-white transition-colors" placeholder="Nama Item (cth: LCD)" value="${d.name || ''}">
                     <textarea class="item-desc w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-[10px] font-medium outline-none focus:bg-white transition-colors resize-none h-16" placeholder="Keterangan / IMEI / Masalah">${d.description || ''}</textarea>
                 </div>
                 <div class="grid grid-cols-4 gap-2">
-                    <div class="float-input-group"><input type="number" oninput="calculateTotal()" class="qty w-full bg-slate-50 border rounded-xl px-1 text-center font-bold text-[10px] font-num" value="${d.qty || 1}"><label class="w-full text-center">Qty</label></div>
-                    <div class="float-input-group"><input type="number" step="0.01" oninput="calculateTotal()" class="kos w-full bg-slate-50 border rounded-xl px-1 text-center font-bold text-[10px] font-num" value="${d.kos || ''}"><label class="w-full text-center">Jual</label></div>
-                    <div class="float-input-group"><input type="number" step="0.01" class="modal-price w-full bg-slate-50 border rounded-xl px-1 text-center font-bold text-[10px] text-rose-500 font-num" value="${d.modal || ''}"><label class="w-full text-center text-rose-300">Kos</label></div>
-                    <div class="float-input-group"><input type="number" step="0.01" oninput="calculateTotal()" class="discount w-full bg-slate-50 border rounded-xl px-1 text-center font-bold text-[10px] text-blue-500 font-num" value="${d.discount || ''}"><label class="w-full text-center text-blue-300">Disc</label></div>
+                    <div class="float-input-group"><input type="number" oninput="calculateTotal()" class="qty w-full bg-slate-50 border border-slate-200 rounded-xl px-1 text-center font-bold text-[10px] font-num" value="${d.qty || 1}"><label class="w-full text-center">Qty</label></div>
+                    <div class="float-input-group"><input type="number" step="0.01" oninput="calculateTotal()" class="kos w-full bg-slate-50 border border-slate-200 rounded-xl px-1 text-center font-bold text-[10px] font-num" value="${d.kos || ''}"><label class="w-full text-center">Jual</label></div>
+                    <div class="float-input-group"><input type="number" step="0.01" class="modal-price w-full bg-slate-50 border border-slate-200 rounded-xl px-1 text-center font-bold text-[10px] text-rose-500 font-num" value="${d.modal || ''}"><label class="w-full text-center text-rose-300">Kos</label></div>
+                    <div class="float-input-group"><input type="number" step="0.01" oninput="calculateTotal()" class="discount w-full bg-slate-50 border border-slate-200 rounded-xl px-1 text-center font-bold text-[10px] text-blue-500 font-num" value="${d.discount || ''}"><label class="w-full text-center text-blue-300">Disc</label></div>
                 </div>
             </div>`;
         }
@@ -471,7 +511,6 @@
             const doc = new jsPDF();
             const pageWidth = doc.internal.pageSize.width;
 
-            // Header
             doc.setFillColor(15, 23, 42); doc.rect(0, 0, pageWidth, 40, 'F');
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(22); doc.setFont("helvetica", "bold"); doc.text("NASZEX CLOUD", 15, 20);
@@ -482,7 +521,6 @@
             doc.text("SSM: PG052XXXX-T", pageWidth - 15, 23, { align: "right" });
             doc.text("Contact: 01X-XXXXXXX", pageWidth - 15, 28, { align: "right" });
 
-            // Body
             doc.setTextColor(30, 41, 59); doc.setFontSize(16); doc.setFont("helvetica", "bold"); doc.text("OFFICIAL RECEIPT", 15, 55);
             doc.setFontSize(10); doc.setFont("helvetica", "normal");
             doc.text(`No. Resit: ${inv.invoiceNo}`, 15, 62);
@@ -516,6 +554,7 @@
             terms.forEach(t => { doc.text(t, 15, termY); termY += 4; });
 
             doc.save(`NASZEX-${inv.invoiceNo}.pdf`);
+            showToast("PDF Generated");
         }
 
         function handleSearch() { updateDashboard(document.getElementById('searchInput').value); }
@@ -548,13 +587,17 @@
 
             container.innerHTML = filtered.length ? '' : `<div class="py-12 text-center opacity-40 text-[10px] font-bold uppercase">Tiada Rekod</div>`;
 
-            filtered.forEach(i => {
+            // Staggered animation injection
+            filtered.forEach((i, index) => {
                 const isPaid = i.status === 'paid';
                 const statusColor = isPaid ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700';
                 const repairMap = {'Received':'bg-slate-200','Waiting':'bg-amber-200','Diagnosis':'bg-purple-200','Repairing':'bg-blue-200','Ready':'bg-emerald-400 animate-pulse','Collected':'bg-slate-800 text-white'};
                 
+                // Add Animation Delay based on index
+                const delay = index * 0.05; 
+                
                 container.insertAdjacentHTML('beforeend', `
-                <div onclick="openActionMenu('${i.id}')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 active:scale-[0.98] transition-all flex justify-between items-center group">
+                <div onclick="openActionMenu('${i.id}')" style="animation-delay: ${delay}s" class="list-item-anim bg-white p-4 rounded-2xl shadow-sm border border-slate-100 tap-effect flex justify-between items-center group">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl ${repairMap[i.repairStatus]||'bg-slate-100'} flex items-center justify-center text-[10px] font-black uppercase">
                             ${(i.repairStatus||'NEW').substring(0,3)}
@@ -575,14 +618,16 @@
 
         function trackStatus() {
             const p = document.getElementById('toolTrackPhone').value.trim();
-            if(!p) return alert("Masukkan No. Phone");
+            if(!p) return showToast("Masukkan No. Phone", "error");
             const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b)=>b.createdAt-a.createdAt)[0];
-            if(!match) return alert("Tiada rekod.");
+            if(!match) return showToast("Tiada rekod dijumpai", "error");
+            
             document.getElementById('trackEmpty').classList.add('hidden');
             document.getElementById('trackResult').classList.remove('hidden');
             document.getElementById('trName').innerText = match.customerName;
             document.getElementById('trNo').innerText = match.invoiceNo;
             document.getElementById('trDevice').innerText = (match.items||[]).map(x=>x.name).join(", ") || "Servis Umum";
+            
             const stages = ['Received', 'Waiting', 'Diagnosis', 'Repairing', 'Ready', 'Collected'];
             let h = '', passed = true;
             stages.forEach(s => {
@@ -596,13 +641,15 @@
                 </div>`;
             });
             document.getElementById('timelineContainer').innerHTML = h;
+            showToast("Rekod Dijumpai");
         }
 
         async function saveAndGenerate() {
             const btn = document.getElementById('btnSave');
             btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses...`; lucide.createIcons();
             const n = document.getElementById('custName').value, p = document.getElementById('custPhone').value;
-            if(!n || !p) { alert("Isi Nama & Phone!"); btn.innerText = "Simpan Rekod"; return; }
+            if(!n || !p) { showToast("Sila isi Nama & Phone!", "error"); btn.innerText = "Simpan Rekod"; return; }
+            
             const items = [];
             document.querySelectorAll('.item-entry').forEach(r => {
                 const name = r.querySelector('.item-name').value;
@@ -618,22 +665,23 @@
             };
             const editId = document.getElementById('editId').value;
             try {
-                if(editId) { await db.collection("invoices").doc(editId).update(data); }
+                if(editId) { await db.collection("invoices").doc(editId).update(data); showToast("Rekod Dikemaskini"); }
                 else {
                     const lastNo = allInvoices.reduce((max, i) => Math.max(max, parseInt(i.invoiceNo?.split('-')[1]||0)), 0);
                     data.invoiceNo = "NX-" + (lastNo + 1).toString().padStart(4, '0');
                     data.repairStatus = 'Received'; data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     await db.collection("invoices").add(data);
+                    showToast("Job Sheet Dicipta");
                 }
                 toggleModal(false);
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error(e); showToast("Ralat Sistem", "error"); }
             btn.innerText = "Simpan Rekod";
         }
 
         function toggleModal(show) {
             const m = document.getElementById('invoiceModal');
             if(show) { m.classList.remove('hidden'); requestAnimationFrame(()=>m.classList.add('active')); }
-            else { m.classList.remove('active'); setTimeout(()=>m.classList.add('hidden'), 200); }
+            else { m.classList.remove('active'); setTimeout(()=>m.classList.add('hidden'), 250); }
         }
         function openAddModal() {
             document.getElementById('modalTitle').innerText = "Initiate Job";
@@ -650,19 +698,20 @@
             btn.innerHTML = `<span>Bayaran: ${i.status.toUpperCase()}</span><i data-lucide="refresh-ccw" class="w-4 h-4"></i>`;
             btn.onclick = async () => {
                 await db.collection("invoices").doc(id).update({status: i.status==='paid'?'outstanding':'paid'});
+                showToast("Status Bayaran Ditukar");
                 closeActionMenu();
             };
             document.getElementById('actionModal').classList.remove('hidden');
             requestAnimationFrame(()=>document.getElementById('actionModal').classList.add('active'));
             lucide.createIcons();
         }
-        function closeActionMenu() { const m = document.getElementById('actionModal'); m.classList.remove('active'); setTimeout(()=>m.classList.add('hidden'), 200); }
+        function closeActionMenu() { const m = document.getElementById('actionModal'); m.classList.remove('active'); setTimeout(()=>m.classList.add('hidden'), 250); }
         
-        async function updateLiveStatus(id, val) { await db.collection("invoices").doc(id).update({repairStatus: val}); }
+        async function updateLiveStatus(id, val) { await db.collection("invoices").doc(id).update({repairStatus: val}); showToast(`Status: ${val}`); }
         function handleTools(act) {
             const p = document.getElementById('toolReceiptPhone').value;
             const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b)=>b.createdAt-a.createdAt)[0];
-            if(!match) return alert("Rekod tidak dijumpai.");
+            if(!match) return showToast("Rekod tidak dijumpai", "error");
             if(act === 'whatsapp') window.open(`https://wa.me/60${p.replace(/^0+/,'')}`); else generateInvoicePDF(match);
         }
         function formatDate(ts, full=false) { if(!ts) return '--/--'; const d = ts.toDate ? ts.toDate() : new Date(ts); return full ? `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}` : `${d.getDate()}/${d.getMonth()+1}`; }
@@ -683,7 +732,7 @@
             mo.forEach((m, i) => {
                 const monthly = allInvoices.filter(inv => { const d = inv.createdAt?.toDate ? inv.createdAt.toDate() : new Date(); return d.getMonth() === i && d.getFullYear() === 2026; });
                 const pS = monthly.reduce((s, inv) => inv.status === 'paid' ? s + parseFloat(inv.total) : s, 0);
-                if (monthly.length > 0) h += `<tr class="border-b"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-slate-400">${monthly.length}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(pS)}</td></tr>`;
+                if (monthly.length > 0) h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-slate-400">${monthly.length}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(pS)}</td></tr>`;
             });
             tb.innerHTML = h || '<tr><td colspan="3" class="text-center py-8">Tiada Data</td></tr>';
         }
@@ -696,7 +745,7 @@
                 let mModal = 0, mRev = 0;
                 monthly.forEach(inv => { mRev += parseFloat(inv.total); (inv.items || []).forEach(it => { mModal += (parseFloat(it.modal)||0) * (parseFloat(it.qty)||1); }); });
                 const mProfit = mRev - mModal; totalNett += mProfit;
-                if(mRev > 0) h += `<tr class="border-b"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-rose-500">RM ${Math.round(mModal)}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(mProfit)}</td></tr>`;
+                if(mRev > 0) h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-rose-500">RM ${Math.round(mModal)}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(mProfit)}</td></tr>`;
             });
             tb.innerHTML = h; document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
         }
@@ -717,8 +766,8 @@
                 calculateTotal();
                 toggleModal(true);
             }
-            if(type === 'delete' && confirm("Hapus rekod ini?")) db.collection("invoices").doc(activeId).delete();
-            if(type === 'getlink') { navigator.clipboard.writeText(window.location.origin + "/view?id=" + activeId); alert("Link Berjaya Disalin"); }
+            if(type === 'delete' && confirm("Hapus rekod ini?")) { db.collection("invoices").doc(activeId).delete(); showToast("Rekod Dihapus"); }
+            if(type === 'getlink') { navigator.clipboard.writeText(window.location.origin + "/view?id=" + activeId); showToast("Link Disalin"); }
             closeActionMenu();
         }
 
