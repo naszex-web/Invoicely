@@ -27,7 +27,6 @@
 
         .phone-font { font-family: 'Roboto Mono', monospace; }
         
-        /* Cop Stamp PAID Premium */
         .paid-stamp {
             position: absolute;
             top: 55%;
@@ -45,7 +44,6 @@
             display: none;
             z-index: 10;
             letter-spacing: 0.2em;
-            filter: blur(0.4px);
         }
 
         .status-paid { background: #059669; color: white; box-shadow: 0 10px 20px -5px rgba(5, 150, 105, 0.3); }
@@ -141,6 +139,12 @@
                 </div>
             </div>
 
+            <div class="flex items-center px-2 mb-6 opacity-30">
+                <p class="flex-1 text-[9px] font-black uppercase tracking-[0.2em]">Description</p>
+                <p class="w-10 text-center text-[9px] font-black uppercase tracking-[0.2em]">Qty</p>
+                <p class="w-24 text-right text-[9px] font-black uppercase tracking-[0.2em]">Subtotal</p>
+            </div>
+
             <div id="itemsList" class="space-y-6 mb-12"></div>
 
             <div class="border-t border-slate-100 pt-10 flex justify-between items-end">
@@ -162,7 +166,6 @@
                 <div class="text-[10px] text-slate-400 font-semibold leading-relaxed space-y-2">
                     <p class="tnc-item">Resit asal diperlukan untuk sebarang tuntutan waranti.</p>
                     <p class="tnc-item">Tiada pulangan wang bagi servis yang telah disiapkan.</p>
-                    <p class="tnc-item">Tidak bertanggungjawab atas kehilangan data semasa/selepas repair.</p>
                 </div>
             </div>
         </div>
@@ -188,21 +191,13 @@
         async function loadInvoice() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            if (!id) {
-                document.getElementById('loader').innerHTML = `<p class="font-black text-rose-500 uppercase text-[10px]">ID Missing</p>`;
-                return;
-            }
+            if (!id) return;
 
             try {
                 const doc = await db.collection("invoices").doc(id).get();
-                if (!doc.exists) {
-                    document.getElementById('loader').innerHTML = `<p class="font-black text-rose-500 uppercase text-[10px]">Invalid Link</p>`;
-                    return;
-                }
+                if (!doc.exists) return;
 
                 const data = doc.data();
-                
-                // --- SAFE RENDERING (ELAK CRASH) ---
                 document.getElementById('invoiceNo').innerText = data.invoiceNo || 'NX-SYSTEM';
                 document.getElementById('custName').innerText = data.customerName || '---';
                 document.getElementById('custPhone').innerText = data.customerPhone || '---';
@@ -214,17 +209,13 @@
                     document.getElementById('receiptDate').innerText = `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
                 }
 
-                // --- PROGRESS LOGIC (SAFE) ---
+                // Tracking Logic
                 const repairStatus = data.repairStatus || 'Received';
                 const steps = ['Received', 'Diagnosis', 'Repairing', 'Ready', 'Collected'];
                 const statusIdx = steps.indexOf(repairStatus);
-                
                 const line = document.getElementById('progressLine');
-                if (statusIdx >= 0 && statusIdx < 4) {
-                    line.style.width = (statusIdx * 33.33) + '%';
-                } else if (statusIdx >= 4) {
-                    line.style.width = '100%';
-                }
+                if (statusIdx >= 0 && statusIdx < 4) line.style.width = (statusIdx * 33.33) + '%';
+                else if (statusIdx >= 4) line.style.width = '100%';
 
                 steps.slice(0, 4).forEach((s, idx) => {
                     const el = document.getElementById('step-' + s);
@@ -235,7 +226,7 @@
                     }
                 });
 
-                // Status Badge & Stamp
+                // Status Badge
                 const badge = document.getElementById('statusBadge');
                 const stamp = document.getElementById('paidStamp');
                 if (data.status === 'paid') {
@@ -247,19 +238,24 @@
                     badge.classList.add('status-unpaid');
                 }
 
-                // Items List
+                // ITEMS LIST (WITH DISCOUNT)
                 const itemsCont = document.getElementById('itemsList');
                 itemsCont.innerHTML = "";
                 (data.items || []).forEach(item => {
                     const lineTotal = (parseFloat(item.kos) * parseFloat(item.qty)).toFixed(2);
+                    const disc = parseFloat(item.discount || 0);
+                    
                     itemsCont.insertAdjacentHTML('beforeend', `
-                        <div class="flex items-start px-2 py-4 border-b border-slate-50 last:border-0">
+                        <div class="flex items-start px-2 py-4 border-b border-slate-50 last:border-0 transition-all hover:bg-slate-50/20">
                             <div class="flex-1 pr-6">
                                 <h4 class="text-[11px] font-extrabold uppercase text-slate-800 leading-tight">${item.name}</h4>
                                 <p class="text-[9px] font-bold text-slate-400 mt-1.5 uppercase tracking-tighter italic">${item.desc || '-'}</p>
                             </div>
                             <div class="w-10 text-center"><p class="text-[11px] font-black phone-font">${item.qty}</p></div>
-                            <div class="w-24 text-right"><p class="text-[12px] font-black phone-font">RM ${lineTotal}</p></div>
+                            <div class="w-24 text-right">
+                                <p class="text-[12px] font-black text-slate-900 phone-font">RM ${lineTotal}</p>
+                                ${disc > 0 ? `<p class="text-[9px] font-black text-rose-500 mt-1 uppercase italic tracking-tighter">(-RM ${disc.toFixed(2)})</p>` : ''}
+                            </div>
                         </div>
                     `);
                 });
@@ -268,10 +264,7 @@
                 document.getElementById('receiptContent').classList.remove('hidden');
                 lucide.createIcons();
 
-            } catch (error) { 
-                console.error("Firebase Error:", error);
-                document.getElementById('loader').innerHTML = `<p class="font-black text-rose-500 uppercase text-[10px]">Database Connection Error</p>`; 
-            }
+            } catch (error) { console.error(error); }
         }
         window.onload = loadInvoice;
     </script>
