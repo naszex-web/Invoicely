@@ -13,17 +13,17 @@
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: #f8fafc;
             color: #0f172a; 
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
             letter-spacing: -0.025em;
         }
 
-        /* Cinematic Sheet Animation */
-        .modal-active { display: flex !important; animation: cinematicSheet 0.6s cubic-bezier(0.32, 0.72, 0, 1); }
+        /* Cinematic Animations */
+        .modal-active { display: flex !important; animation: cinematicSheet 0.5s cubic-bezier(0.32, 0.72, 0, 1); }
         @keyframes cinematicSheet { 
-            from { transform: translateY(100%) scale(0.95); opacity: 0; } 
+            from { transform: translateY(100%) scale(0.98); opacity: 0; } 
             to { transform: translateY(0) scale(1); opacity: 1; } 
         }
         
@@ -31,107 +31,111 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
         /* Glass UI Premium */
-        .nav-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-        .tab-active { background: white; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #ef4444 !important; transform: scale(1.02); }
+        .nav-glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .tab-active { background: white; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); color: #ef4444 !important; }
         
         /* Multi-Color Pulse System */
-        .p-indigo { animation: pulseInd 2s infinite; }
-        @keyframes pulseInd { 0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); } 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); } }
+        .p-indigo { animation: pInd 2s infinite; }
+        @keyframes pInd { 0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); } 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); } }
         
-        .p-amber { animation: pulseAmb 2s infinite; }
-        @keyframes pulseAmb { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+        .p-amber { animation: pAmb 2s infinite; }
+        @keyframes pAmb { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
 
-        .p-purple { animation: pulsePur 2s infinite; }
-        @keyframes pulsePur { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); } 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); } }
+        .p-purple { animation: pPur 2s infinite; }
+        @keyframes pPur { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(168, 85, 247, 0); } 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); } }
 
-        .p-blue { animation: pulseBlu 2s infinite; }
-        @keyframes pulseBlu { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
+        .p-blue { animation: pBlu 2s infinite; }
+        @keyframes pBlu { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
 
-        .btn-press:active { transform: scale(0.92); filter: brightness(0.9); transition: 0.15s; }
-        .card-press:active { transform: scale(0.97); transition: 0.15s; }
+        .btn-press:active { transform: scale(0.94); transition: 0.1s; }
+        .card-press:active { transform: scale(0.98); transition: 0.1s; }
         
-        .grad-save { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
-        .grad-dark { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .grad-save { background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%); }
+        .grad-dark { background: linear-gradient(135deg, #334155 0%, #0f172a 100%); }
     </style>
 </head>
-<body class="min-h-screen pb-36">
+<body class="min-h-screen pb-32">
 
-    <nav class="sticky top-0 z-40 nav-glass border-b border-white/50 px-6 py-5">
+    <nav class="sticky top-0 z-40 nav-glass border-b border-slate-200/50 px-6 py-4">
         <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-slate-950 rounded-2xl flex items-center justify-center shadow-2xl">
-                    <span class="text-red-500 font-black text-sm italic tracking-tighter">NX</span>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-950 rounded-xl flex items-center justify-center shadow-lg">
+                    <span class="text-red-500 font-black text-xs italic">NX</span>
                 </div>
                 <div>
-                    <h1 class="text-[13px] font-black italic uppercase tracking-[0.35em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
-                    <p class="text-[7px] font-black text-slate-400 uppercase tracking-[0.5em] mt-2 leading-none">RMS Cinematic v5.0</p>
+                    <h1 class="text-[11px] font-black italic uppercase tracking-[0.3em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
+                    <p class="text-[6px] font-black text-slate-400 uppercase tracking-[0.4em] mt-1.5 leading-none">RMS Cinematic v5.0</p>
                 </div>
             </div>
-            <button onclick="refreshData(this)" class="p-3.5 bg-slate-100 rounded-full text-slate-500 hover:text-red-600 transition-all btn-press shadow-inner">
-                <i data-lucide="refresh-cw" id="refresh-icon" class="w-5 h-5"></i>
+            <button onclick="refreshData(this)" class="p-2.5 bg-slate-100 rounded-full text-slate-400 hover:text-red-600 transition-all btn-press">
+                <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
             </button>
         </div>
     </nav>
 
-    <div class="max-w-md mx-auto p-5 space-y-10">
+    <div class="max-w-md mx-auto p-4 space-y-6">
         
-        <main id="dashboardView" class="space-y-8">
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <p class="text-[18px] font-black text-slate-900 leading-none italic">RM <span id="stat-month-paid">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Paid</p>
+        <main id="dashboardView" class="space-y-6">
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-emerald-50 rounded-3xl p-4 border border-emerald-100 text-center shadow-sm">
+                    <p class="text-[14px] font-black text-emerald-700 leading-none italic">RM <span id="stat-month-paid">0</span></p>
+                    <p class="text-[7px] font-black text-emerald-400 uppercase mt-2 tracking-widest leading-none">Paid</p>
                 </div>
-                <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <p class="text-[18px] font-black text-slate-900 leading-none italic">RM <span id="stat-month-pending">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Unpaid</p>
+                <div class="bg-rose-50 rounded-3xl p-4 border border-rose-100 text-center shadow-sm">
+                    <p class="text-[14px] font-black text-rose-700 leading-none italic">RM <span id="stat-month-pending">0</span></p>
+                    <p class="text-[7px] font-black text-rose-400 uppercase mt-2 tracking-widest leading-none">Unpaid</p>
                 </div>
-                <div class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-50 text-center">
-                    <p class="text-[18px] font-black text-slate-900 leading-none italic"><span id="stat-month-jobs">0</span></p>
-                    <p class="text-[8px] font-black text-slate-300 uppercase mt-2 tracking-widest leading-none">Jobs</p>
+                <div class="bg-indigo-50 rounded-3xl p-4 border border-indigo-100 text-center shadow-sm">
+                    <p class="text-[14px] font-black text-indigo-700 leading-none italic"><span id="stat-month-jobs">0</span></p>
+                    <p class="text-[7px] font-black text-indigo-400 uppercase mt-2 tracking-widest leading-none">Jobs</p>
                 </div>
             </div>
 
             <div class="relative group">
                 <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari Pelanggan..." 
-                       class="w-full pl-14 pr-6 py-6 bg-white border-none rounded-[2.2rem] text-sm font-bold shadow-xl shadow-slate-200/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all placeholder:text-slate-300">
-                <i data-lucide="search" class="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-red-500 transition-colors"></i>
+                       class="w-full pl-12 pr-4 py-4.5 bg-white border-none rounded-2xl text-xs font-bold shadow-md shadow-slate-200/50 focus:ring-4 focus:ring-red-500/5 outline-none transition-all placeholder:text-slate-300">
+                <i data-lucide="search" class="absolute left-4.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-red-500"></i>
             </div>
 
-            <div class="flex p-2 bg-slate-200/40 rounded-[2.2rem] gap-2">
-                <button onclick="filterInvoices('all')" id="f-all" class="flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase transition-all tab-active">Semua</button>
-                <button onclick="filterInvoices('paid')" id="f-paid" class="flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase transition-all text-slate-500">Paid</button>
-                <button onclick="filterInvoices('outstanding')" id="f-pending" class="flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase transition-all text-slate-500">Unpaid</button>
+            <div class="flex p-1.5 bg-slate-200/40 rounded-2xl gap-1.5">
+                <button onclick="filterInvoices('all')" id="f-all" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all tab-active">Semua</button>
+                <button onclick="filterInvoices('paid')" id="f-paid" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all text-slate-500">Paid</button>
+                <button onclick="filterInvoices('outstanding')" id="f-pending" class="flex-1 py-2.5 rounded-xl text-[9px] font-black uppercase transition-all text-slate-500">Unpaid</button>
             </div>
 
-            <div id="invoiceContainer" class="space-y-4"></div>
+            <div id="invoiceContainer" class="space-y-3"></div>
         </main>
 
         <main id="reportsView" class="view-hidden">
-            <div class="bg-white rounded-[3.5rem] shadow-2xl overflow-hidden border-4 border-white">
+            <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-50">
                 <table class="w-full text-left">
                     <thead class="bg-slate-50">
                         <tr>
-                            <th class="pl-8 py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Bulan</th>
-                            <th class="text-center py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Jobs</th>
-                            <th class="text-right pr-8 py-5 text-[10px] uppercase font-black text-slate-400 tracking-widest">Total</th>
+                            <th class="pl-6 py-4 text-[9px] uppercase font-black text-slate-400 tracking-widest">Bulan</th>
+                            <th class="text-center py-4 text-[9px] uppercase font-black text-slate-400 tracking-widest">Jobs</th>
+                            <th class="text-right pr-6 py-4 text-[9px] uppercase font-black text-slate-400 tracking-widest">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="reportTableBody" class="text-slate-900 font-bold"></tbody>
+                    <tbody id="reportTableBody" class="text-slate-900 text-[11px] font-bold"></tbody>
                 </table>
             </div>
         </main>
 
         <main id="profitView" class="view-hidden">
-            <div class="bg-white rounded-[3.5rem] shadow-2xl overflow-hidden border-4 border-white">
+            <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-50">
                 <table class="w-full text-left text-slate-900">
                     <thead class="bg-slate-50">
-                        <tr><th class="pl-8 py-5 text-[9px] uppercase font-black text-slate-400">Bulan</th><th class="text-center py-5 text-[9px] uppercase font-black text-rose-500">Modal</th><th class="text-right pr-8 py-5 text-[9px] uppercase font-black text-emerald-600">Nett</th></tr>
-                    </thead>
-                    <tbody id="profitTableBody" class="font-bold"></tbody>
-                    <tfoot class="bg-slate-950">
                         <tr>
-                            <td class="pl-8 py-10 text-white/30 text-[10px] uppercase tracking-widest font-black italic">Profit 2026</td>
-                            <td colspan="2" id="total-net-profit" class="text-right pr-8 text-white text-3xl font-black italic">RM 0</td>
+                            <th class="pl-6 py-4 text-[8px] uppercase font-black text-slate-400 tracking-widest">Bulan</th>
+                            <th class="text-center py-4 text-[8px] uppercase font-black text-rose-500 tracking-widest">Cost</th>
+                            <th class="text-right pr-6 py-4 text-[8px] uppercase font-black text-emerald-600 tracking-widest">Nett</th>
+                        </tr>
+                    </thead>
+                    <tbody id="profitTableBody" class="text-[11px] font-bold"></tbody>
+                    <tfoot class="bg-slate-950 font-black">
+                        <tr>
+                            <td class="pl-6 py-8 text-white/30 text-[9px] uppercase tracking-widest italic">Profit 2026</td>
+                            <td colspan="2" id="total-net-profit" class="text-right pr-6 text-white text-2xl italic">RM 0</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -139,42 +143,42 @@
         </main>
     </div>
 
-    <div class="fixed bottom-0 left-0 right-0 z-40 nav-glass border-t border-white px-10 py-6 pb-12">
+    <div class="fixed bottom-0 left-0 right-0 z-40 nav-glass border-t border-slate-100 px-8 py-4 pb-10">
         <div class="max-w-md mx-auto grid grid-cols-4 items-center">
-            <button onclick="showPage('dashboard')" id="nav-dash" class="flex flex-col items-center gap-2 text-red-600 btn-press">
-                <i data-lucide="layers" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter">Invoices</span>
+            <button onclick="showPage('dashboard')" id="nav-dash" class="flex flex-col items-center gap-1.5 text-red-600 btn-press">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Invoices</span>
             </button>
             <div class="flex flex-col items-center">
-                <button onclick="openAddModal()" class="grad-dark text-white p-5 rounded-[2.2rem] shadow-2xl -mt-24 border-4 border-white active:scale-75 transition-all duration-300">
-                    <i data-lucide="plus" class="w-8 h-8"></i>
+                <button onclick="openAddModal()" class="grad-dark text-white p-4.5 rounded-2xl shadow-xl -mt-16 border-4 border-white active:scale-75 transition-all">
+                    <i data-lucide="plus" class="w-7 h-7"></i>
                 </button>
             </div>
-            <button onclick="showPage('reports')" id="nav-report" class="flex flex-col items-center gap-2 text-slate-400 btn-press">
-                <i data-lucide="component" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter">Report</span>
+            <button onclick="showPage('reports')" id="nav-report" class="flex flex-col items-center gap-1.5 text-slate-400 btn-press">
+                <i data-lucide="bar-chart-horizontal" class="w-5 h-5"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Report</span>
             </button>
-            <button onclick="showPage('profit')" id="nav-profit" class="flex flex-col items-center gap-2 text-slate-400 btn-press">
-                <i data-lucide="activity" class="w-6 h-6"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter">Profits</span>
+            <button onclick="showPage('profit')" id="nav-profit" class="flex flex-col items-center gap-1.5 text-slate-400 btn-press">
+                <i data-lucide="wallet" class="w-5 h-5"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Profit</span>
             </button>
         </div>
     </div>
 
-    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xl hidden flex-col justify-end">
-        <div class="bg-white rounded-t-[4.5rem] w-full max-h-[96vh] overflow-y-auto p-12 shadow-2xl no-scrollbar">
-            <div class="w-20 h-2 bg-slate-100 rounded-full mx-auto mb-10"></div>
-            <div class="flex justify-between items-center mb-10">
-                <h2 id="modalTitle" class="text-sm font-black uppercase tracking-[0.5em] text-slate-900 italic">Initiate NX-Record</h2>
-                <button onclick="toggleModal(false)" class="p-4 bg-slate-50 rounded-2xl text-slate-900 btn-press"><i data-lucide="x" class="w-6 h-6 text-slate-900"></i></button>
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex-col justify-end">
+        <div class="bg-white rounded-t-[3.5rem] w-full max-h-[95vh] overflow-y-auto p-10 shadow-2xl no-scrollbar">
+            <div class="w-16 h-1.5 bg-slate-100 rounded-full mx-auto mb-8"></div>
+            <div class="flex justify-between items-center mb-8">
+                <h2 id="modalTitle" class="text-xs font-black uppercase tracking-[0.4em] text-slate-900 italic">Initiate Record</h2>
+                <button onclick="toggleModal(false)" class="p-3 bg-slate-50 rounded-xl text-slate-900 btn-press"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             
-            <div class="space-y-8">
+            <div class="space-y-6">
                 <input type="hidden" id="editId">
-                <div class="grid grid-cols-2 gap-5 text-gray-900">
-                    <input type="text" id="custName" placeholder="Nama Pelanggan" class="col-span-2 p-6 bg-slate-50 rounded-[2rem] text-sm font-bold outline-none">
-                    <input type="tel" id="custPhone" placeholder="01x-xxxxxxx" class="p-6 bg-slate-50 rounded-[2rem] text-sm font-bold font-mono outline-none">
-                    <select id="warranty" class="p-6 bg-slate-50 rounded-[2rem] text-[11px] font-black uppercase outline-none">
+                <div class="grid grid-cols-2 gap-4 text-gray-900">
+                    <input type="text" id="custName" placeholder="Nama Pelanggan" class="col-span-2 p-5 bg-slate-50 rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-red-500/10 transition-all">
+                    <input type="tel" id="custPhone" placeholder="01x-xxxxxxx" class="p-5 bg-slate-50 rounded-2xl text-xs font-bold font-mono outline-none focus:ring-2 focus:ring-red-500/10 transition-all">
+                    <select id="warranty" class="p-5 bg-slate-50 rounded-2xl text-[10px] font-black uppercase outline-none">
                         <option value="No Warranty">No Warranty</option>
                         <option value="7 Days">7 Hari Waranti</option>
                         <option value="1 Month">1 Bulan Waranti</option>
@@ -182,34 +186,34 @@
                     </select>
                 </div>
 
-                <div id="itemRowsContainer" class="space-y-5"></div>
+                <div id="itemRowsContainer" class="space-y-3"></div>
 
-                <button onclick="addRow()" class="w-full py-7 bg-white border-2 border-dashed border-slate-200 rounded-[2.5rem] text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] hover:text-red-500 hover:border-red-200 transition-all">+ Add Service Line</button>
+                <button onclick="addRow()" class="w-full py-5 bg-white border-2 border-dashed border-slate-100 rounded-2xl text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] hover:text-red-500 transition-all">+ Add Service Line</button>
 
-                <div class="flex justify-between items-center px-6 py-10 border-t border-slate-50 mt-10">
-                    <select id="initialStatus" class="bg-slate-900 text-white p-4 rounded-2xl text-[10px] font-black uppercase outline-none">
+                <div class="flex justify-between items-center px-4 py-8 border-t border-slate-50 mt-4 text-gray-900">
+                    <select id="initialStatus" class="bg-slate-900 text-white p-3 rounded-xl text-[9px] font-black uppercase outline-none">
                         <option value="outstanding">UNPAID</option>
                         <option value="paid">PAID</option>
                     </select>
                     <div class="text-right">
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-3">Total Payable</p>
-                        <p class="text-4xl font-black text-slate-900 italic leading-none">RM <span id="grandTotal">0.00</span></p>
+                        <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-2 leading-none">Grand Total</p>
+                        <p class="text-3xl font-black text-slate-900 italic leading-none">RM <span id="grandTotal">0.00</span></p>
                     </div>
                 </div>
 
-                <button onclick="saveAndGenerate()" id="btnSave" class="w-full grad-save text-white py-7 rounded-[2.5rem] font-black uppercase text-sm tracking-[0.4em] shadow-2xl btn-press">Execute Sync</button>
+                <button onclick="saveAndGenerate()" id="btnSave" class="w-full grad-save text-white py-6 rounded-2xl font-black uppercase text-xs tracking-[0.3em] shadow-xl btn-press">Execute Sync</button>
             </div>
         </div>
     </div>
 
-    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-2xl hidden flex-col justify-end">
-        <div class="bg-white rounded-t-[5rem] w-full p-12 shadow-2xl space-y-4">
-            <div class="w-20 h-2 bg-slate-100 rounded-full mx-auto mb-10"></div>
-            <p id="actionTargetName" class="text-center font-black text-xl uppercase text-slate-900 mb-10 italic tracking-tighter"></p>
+    <div id="actionModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xl hidden flex-col justify-end">
+        <div class="bg-white rounded-t-[4rem] w-full p-10 shadow-2xl space-y-3">
+            <div class="w-16 h-1.5 bg-slate-100 rounded-full mx-auto mb-8"></div>
+            <p id="actionTargetName" class="text-center font-black text-lg uppercase text-slate-900 mb-8 italic tracking-tight"></p>
             
-            <div class="p-8 bg-slate-50 rounded-[3rem] mb-6 border border-white text-slate-900">
-                <label class="text-[10px] font-black uppercase text-slate-400 block mb-4 tracking-[0.2em]">Flow: Received → Waiting → Diagnosis → Repairing → Ready → Collected</label>
-                <select id="updateRepairStatus" onchange="updateLiveStatus(activeId, this.value)" class="w-full bg-white border border-slate-100 rounded-[1.5rem] p-5 text-sm font-black outline-none shadow-sm">
+            <div class="p-6 bg-slate-50 rounded-[2.5rem] mb-4 border border-white text-slate-900">
+                <label class="text-[9px] font-black uppercase text-slate-400 block mb-3 tracking-widest leading-none">Flow: Received → Waiting → Diagnosis → Repairing → Ready → Collected</label>
+                <select id="updateRepairStatus" onchange="updateLiveStatus(activeId, this.value)" class="w-full bg-white border border-slate-100 rounded-2xl p-4 text-xs font-black outline-none">
                     <option value="Received">1. Received</option>
                     <option value="Waiting">2. Waiting List</option>
                     <option value="Diagnosis">3. Diagnosis</option>
@@ -219,14 +223,13 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <button id="btnToggleStatus" class="flex items-center justify-between p-6 bg-emerald-50 text-emerald-700 rounded-3xl font-black text-[11px] uppercase btn-press"><span>Bayaran</span><i data-lucide="check-circle" class="w-5 h-5"></i></button>
-                <button onclick="handleAction('getlink')" class="flex items-center justify-between p-6 bg-blue-50 text-blue-700 rounded-3xl font-black text-[11px] uppercase btn-press"><span>Share Link</span><i data-lucide="share-2" class="w-5 h-5"></i></button>
-                <button onclick="handleAction('edit')" class="flex items-center justify-between p-6 bg-slate-900 text-white rounded-3xl font-black text-[11px] uppercase btn-press"><span>Edit Data</span><i data-lucide="pen-tool" class="w-5 h-5"></i></button>
-                <button onclick="handleAction('delete')" class="flex items-center justify-between p-6 bg-rose-50 text-rose-700 rounded-3xl font-black text-[11px] uppercase btn-press"><span>Delete</span><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+            <div class="grid grid-cols-2 gap-2.5">
+                <button id="btnToggleStatus" class="flex items-center justify-between p-5 bg-emerald-50 text-emerald-700 rounded-2xl font-black text-[10px] uppercase btn-press"><span>Bayaran</span><i data-lucide="check-circle" class="w-4 h-4"></i></button>
+                <button onclick="handleAction('getlink')" class="flex items-center justify-between p-5 bg-blue-50 text-blue-700 rounded-2xl font-black text-[10px] uppercase btn-press"><span>Link</span><i data-lucide="link" class="w-4 h-4"></i></button>
+                <button onclick="handleAction('edit')" class="flex items-center justify-between p-5 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase btn-press"><span>Modify</span><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                <button onclick="handleAction('delete')" class="flex items-center justify-between p-5 bg-rose-50 text-rose-700 rounded-2xl font-black text-[10px] uppercase btn-press"><span>Purge</span><i data-lucide="trash-2" class="w-4 h-4"></i></button>
             </div>
-            
-            <button onclick="closeActionMenu()" class="w-full p-10 font-black text-[11px] text-slate-300 uppercase text-center tracking-[0.5em]">Dismiss</button>
+            <button onclick="closeActionMenu()" class="w-full p-8 font-black text-[10px] text-slate-300 uppercase text-center tracking-[0.4em]">Dismiss</button>
         </div>
     </div>
 
@@ -267,14 +270,13 @@
             if(p === 'profit') generateProfitReport();
         }
 
-        async function refreshData(btn) {
+        async function refreshData() {
             const icon = document.getElementById('refresh-icon');
             icon.classList.add('spin-anim');
-            try {
-                const snap = await db.collection("invoices").orderBy("createdAt", "desc").get();
-                allInvoices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                showPage(localStorage.getItem('naszex_active_page') || 'dashboard');
-            } finally { setTimeout(() => icon.classList.remove('spin-anim'), 800); }
+            const snap = await db.collection("invoices").orderBy("createdAt", "desc").get();
+            allInvoices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            showPage(localStorage.getItem('naszex_active_page') || 'dashboard');
+            setTimeout(() => icon.classList.remove('spin-anim'), 800);
         }
 
         function listenToInvoices() {
@@ -295,18 +297,18 @@
             updateDashboard();
         }
 
-        // --- LOGIC ---
+        // --- CORE FUNCTIONS ---
         function createItemRow(d = {}) {
             return `
-                <div class="item-entry bg-white p-6 rounded-[2.5rem] border border-slate-50 shadow-sm space-y-5 relative text-gray-900">
-                    <button onclick="this.parentElement.remove(); calculateTotal();" class="absolute top-4 right-4 text-rose-400 active:scale-75 transition-transform"><i data-lucide="minus-circle" class="w-6 h-6"></i></button>
-                    <input type="text" class="item-name w-full bg-transparent font-black text-[13px] outline-none border-b border-slate-50 pb-3" placeholder="Service / Replacement Part" value="${d.name || ''}">
-                    <input type="text" class="item-desc w-full bg-transparent text-[11px] text-slate-400 outline-none" placeholder="Details / Serial" value="${d.desc || ''}">
-                    <div class="grid grid-cols-4 gap-4 pt-2">
-                        <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Qty</label><input type="number" oninput="calculateTotal()" class="qty w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px]" value="${d.qty || 1}"></div>
-                        <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Sell</label><input type="number" step="0.01" oninput="calculateTotal()" class="kos w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px]" value="${d.kos || ''}"></div>
-                        <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Cost</label><input type="number" step="0.01" class="modal-price w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px] text-rose-500" value="${d.modal || ''}"></div>
-                        <div><label class="text-[9px] font-black uppercase text-slate-300 block mb-2">Disc</label><input type="number" step="0.01" oninput="calculateTotal()" class="discount w-full bg-slate-50 rounded-2xl p-3 text-center font-bold text-[12px] text-blue-600" value="${d.discount || ''}"></div>
+                <div class="item-entry bg-white p-5 rounded-3xl border border-slate-50 shadow-sm space-y-4 relative text-gray-900">
+                    <button onclick="this.parentElement.remove(); calculateTotal();" class="absolute top-3 right-3 text-rose-400 active:scale-75 transition-transform"><i data-lucide="minus-circle" class="w-5 h-5"></i></button>
+                    <input type="text" class="item-name w-full bg-transparent font-black text-[11px] outline-none border-b border-slate-50 pb-2" placeholder="Service / Replacement Part" value="${d.name || ''}">
+                    <input type="text" class="item-desc w-full bg-transparent text-[9px] text-slate-400 outline-none" placeholder="Details / Serial" value="${d.desc || ''}">
+                    <div class="grid grid-cols-4 gap-3 pt-1">
+                        <div><label class="text-[8px] font-black uppercase text-slate-300 block mb-1.5 leading-none">Qty</label><input type="number" oninput="calculateTotal()" class="qty w-full bg-slate-50 rounded-xl p-2.5 text-center font-bold text-[11px]" value="${d.qty || 1}"></div>
+                        <div><label class="text-[8px] font-black uppercase text-slate-300 block mb-1.5 leading-none">Sell</label><input type="number" step="0.01" oninput="calculateTotal()" class="kos w-full bg-slate-50 rounded-xl p-2.5 text-center font-bold text-[11px]" value="${d.kos || ''}"></div>
+                        <div><label class="text-[8px] font-black uppercase text-slate-300 block mb-1.5 leading-none">Cost</label><input type="number" step="0.01" class="modal-price w-full bg-slate-50 rounded-xl p-2.5 text-center font-bold text-[11px] text-rose-500" value="${d.modal || ''}"></div>
+                        <div><label class="text-[8px] font-black uppercase text-slate-300 block mb-1.5 leading-none">Disc</label><input type="number" step="0.01" oninput="calculateTotal()" class="discount w-full bg-slate-50 rounded-xl p-2.5 text-center font-bold text-[11px] text-blue-600" value="${d.discount || ''}"></div>
                     </div>
                 </div>
             `;
@@ -331,9 +333,7 @@
                 const name = r.querySelector('.item-name').value;
                 if(name) items.push({ name: name, desc: r.querySelector('.item-desc').value, qty: parseFloat(r.querySelector('.qty').value)||1, kos: parseFloat(r.querySelector('.kos').value)||0, modal: parseFloat(r.querySelector('.modal-price').value)||0, discount: parseFloat(r.querySelector('.discount').value)||0 }); 
             });
-            
             const data = { customerName: n, customerPhone: p, warranty: war, status: st, total: document.getElementById('grandTotal').innerText, items: items };
-            
             try { 
                 if(ed) { await db.collection("invoices").doc(ed).update(data); } 
                 else {
@@ -342,7 +342,7 @@
                         return num > max ? num : max;
                     }, 0);
                     data.invoiceNo = "NX-" + (lastNo + 1).toString().padStart(4, '0');
-                    data.repairStatus = 'Received'; // Default Start
+                    data.repairStatus = 'Received';
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     if(st === 'paid') data.paidAt = data.createdAt;
                     await db.collection("invoices").add(data); 
@@ -352,8 +352,7 @@
         }
 
         async function updateLiveStatus(id, newStatus) {
-            try { await db.collection("invoices").doc(id).update({ repairStatus: newStatus }); } 
-            catch(e) { console.error(e); }
+            try { await db.collection("invoices").doc(id).update({ repairStatus: newStatus }); } catch(e) { console.error(e); }
         }
 
         // --- DASHBOARD RENDER ---
@@ -372,37 +371,35 @@
             if(currentFilter !== 'all') filtered = filtered.filter(i => i.status === currentFilter);
             if(search) { const q = search.toLowerCase(); filtered = filtered.filter(i => (i.customerName||"").toLowerCase().includes(q) || (i.customerPhone||"").includes(q)); }
 
-            container.innerHTML = filtered.length ? '' : '<div class="py-24 text-center text-slate-300 text-[11px] font-black uppercase tracking-[0.5em] italic italic">NX CLOUD: NO RECORDS FOUND</div>';
+            container.innerHTML = filtered.length ? '' : '<div class="py-20 text-center text-slate-300 text-[10px] font-black uppercase tracking-[0.5em] italic italic">NX CLOUD: NO DATA</div>';
             
             filtered.forEach(inv => {
                 const isPaid = inv.status === 'paid';
                 const cardBg = isPaid ? 'bg-emerald-600' : 'bg-rose-600';
-                
-                // Color Logic for Status Pulse
                 let pClass = "";
                 const s = inv.repairStatus || 'Received';
                 if(s === 'Received') pClass = "p-indigo bg-indigo-400";
                 else if(s === 'Waiting') pClass = "p-amber bg-amber-400";
                 else if(s === 'Diagnosis') pClass = "p-purple bg-purple-400";
                 else if(s === 'Repairing') pClass = "p-blue bg-blue-400";
-                else if(s === 'Ready') pClass = "bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]";
+                else if(s === 'Ready') pClass = "bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]";
                 else pClass = "bg-slate-500 opacity-50";
 
                 container.insertAdjacentHTML('beforeend', `
-                    <div onclick="openActionMenu('${inv.id}', '${(inv.customerName||"").replace(/'/g, "\\'")}')" class="${cardBg} px-7 py-5 rounded-[2.5rem] flex items-center justify-between text-white transition-all card-press shadow-2xl shadow-black/10 border-b-4 border-black/15">
+                    <div onclick="openActionMenu('${inv.id}', '${(inv.customerName||"").replace(/'/g, "\\'")}')" class="${cardBg} px-6 py-4 rounded-[2.2rem] flex items-center justify-between text-white transition-all card-press shadow-lg shadow-black/10 border-b-4 border-black/15">
                         <div class="info-col">
-                            <div class="flex items-center gap-2.5 mb-2.5">
-                                <div class="w-2.5 h-2.5 rounded-full ${pClass}"></div>
-                                <h3 class="font-black text-[14px] uppercase truncate tracking-tight leading-none">${inv.customerName || "Anonym"}</h3>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <div class="w-2 h-2 rounded-full ${pClass}"></div>
+                                <h3 class="font-black text-[12px] uppercase truncate tracking-tight leading-none">${inv.customerName || "No Name"}</h3>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-[8px] font-black uppercase bg-black/20 px-2.5 py-1 rounded-lg tracking-widest">${inv.invoiceNo || 'NX-XXXX'}</span>
-                                <p class="text-[10px] font-bold font-mono text-white/70">${inv.customerPhone || '---'}</p>
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-[7px] font-black uppercase bg-black/20 px-2 py-0.5 rounded-md leading-none tracking-widest">${inv.invoiceNo || 'NX-XXXX'}</span>
+                                <p class="text-[9px] font-bold font-mono text-white/60 leading-none">${inv.customerPhone || '---'}</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-[20px] font-black italic leading-none">RM ${Math.round(parseFloat(inv.total))}</p>
-                            <p class="text-[8px] font-black text-white/40 mt-2 uppercase tracking-widest">${inv.repairStatus || 'Received'}</p>
+                            <p class="text-[18px] font-black italic leading-none">RM ${Math.round(parseFloat(inv.total))}</p>
+                            <p class="text-[7px] font-black text-white/40 mt-1 uppercase tracking-widest">${inv.repairStatus || 'Received'}</p>
                         </div>
                     </div>
                 `);
@@ -410,14 +407,14 @@
             lucide.createIcons();
         }
 
-        // --- REPORTING ---
+        // --- REPORTS ---
         function generateReport() {
             const tb = document.getElementById('reportTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
             let h = "";
             mo.forEach((m, i) => {
                 const monthly = allInvoices.filter(inv => { const d = new Date(inv.createdAt?.seconds * 1000 || Date.now()); return d.getMonth() === i && d.getFullYear() === 2026; });
                 const pS = monthly.reduce((s, inv) => inv.status === 'paid' ? s + parseFloat(inv.total) : s, 0);
-                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-8 py-5 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center font-black">${monthly.length}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(pS)}</td></tr>`;
+                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-400 uppercase tracking-widest font-black text-[9px]">${m}</td><td class="text-center">${monthly.length}</td><td class="text-right pr-6 text-emerald-600 italic">RM ${Math.round(pS)}</td></tr>`;
             });
             tb.innerHTML = h;
         }
@@ -430,54 +427,21 @@
                 let mModal = 0, mRev = 0;
                 monthly.forEach(inv => { mRev += parseFloat(inv.total); (inv.items || []).forEach(it => { mModal += (parseFloat(it.modal)||0) * (parseFloat(it.qty)||1); }); });
                 const mProfit = mRev - mModal; totalNett += mProfit;
-                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-8 py-5 text-slate-400 font-extrabold text-[11px] uppercase tracking-widest">${m}</td><td class="text-center text-rose-500 font-black">RM ${Math.round(mModal)}</td><td class="text-right pr-8 text-emerald-600 font-black italic">RM ${Math.round(mProfit)}</td></tr>`;
+                h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-400 uppercase tracking-widest font-black text-[8px]">${m}</td><td class="text-center text-rose-500 font-bold">RM ${Math.round(mModal)}</td><td class="text-right pr-6 text-emerald-600 italic">RM ${Math.round(mProfit)}</td></tr>`;
             });
             tb.innerHTML = h; document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
         }
 
         // --- ACTIONS ---
-        function openActionMenu(id, name) { 
-            activeId = id; 
-            const inv = allInvoices.find(i => i.id === id);
-            document.getElementById('actionTargetName').innerText = name; 
-            document.getElementById('updateRepairStatus').value = inv.repairStatus || 'Received';
-            document.getElementById('actionModal').classList.add('modal-active'); 
-            document.getElementById('btnToggleStatus').onclick = () => toggleStatus(id, inv.status); 
-        }
-
+        function openActionMenu(id, name) { activeId = id; const inv = allInvoices.find(i => i.id === id); document.getElementById('actionTargetName').innerText = name; document.getElementById('updateRepairStatus').value = inv.repairStatus || 'Received'; document.getElementById('actionModal').classList.add('modal-active'); document.getElementById('btnToggleStatus').onclick = () => toggleStatus(id, inv.status); }
         function closeActionMenu() { document.getElementById('actionModal').classList.remove('modal-active'); activeId = null; }
         async function toggleStatus(id, c) { const ns = c==='paid'?'outstanding':'paid'; await db.collection("invoices").doc(id).update({status:ns, paidAt: ns==='paid'?firebase.firestore.FieldValue.serverTimestamp():null}); closeActionMenu(); }
-        function handleAction(type) { 
-            if(type==='edit') editInvoice(activeId); 
-            if(type==='delete') deleteInvoice(activeId); 
-            if(type==='getlink') { navigator.clipboard.writeText(`${window.location.origin}/view.html?id=${activeId}`); alert("Tracking Link Deployed!"); } 
-            closeActionMenu(); 
-        }
-        async function deleteInvoice(id) { if(confirm("Data Purge: Padam rekod ini kekal?")) await db.collection("invoices").doc(id).delete(); }
+        function handleAction(type) { if(type==='edit') editInvoice(activeId); if(type==='delete') deleteInvoice(activeId); if(type==='getlink') { navigator.clipboard.writeText(`${window.location.origin}/view.html?id=${activeId}`); alert("Link Deployed!"); } closeActionMenu(); }
+        async function deleteInvoice(id) { if(confirm("Padam rekod secara kekal?")) await db.collection("invoices").doc(id).delete(); }
         function handleSearch() { updateDashboard(document.getElementById('searchInput').value); }
         function toggleModal(s) { document.getElementById('invoiceModal').classList.toggle('modal-active', s); }
-        function openAddModal() { 
-            document.getElementById('modalTitle').innerText = "Initiate Record"; 
-            document.getElementById('editId').value = ""; 
-            document.getElementById('itemRowsContainer').innerHTML = createItemRow(); 
-            document.getElementById('custName').value = ""; 
-            document.getElementById('custPhone').value = ""; 
-            document.getElementById('grandTotal').innerText = "0.00"; 
-            toggleModal(true); lucide.createIcons(); 
-        }
-
-        async function editInvoice(id) {
-            const inv = allInvoices.find(i => i.id === id); if(!inv) return;
-            document.getElementById('editId').value = id; 
-            document.getElementById('modalTitle').innerText = "Modify NX-Record";
-            document.getElementById('custName').value = inv.customerName; 
-            document.getElementById('custPhone').value = inv.customerPhone;
-            document.getElementById('warranty').value = inv.warranty || "No Warranty"; 
-            document.getElementById('initialStatus').value = inv.status;
-            const cont = document.getElementById('itemRowsContainer'); cont.innerHTML = "";
-            (inv.items || []).forEach(it => cont.insertAdjacentHTML('beforeend', createItemRow(it)));
-            calculateTotal(); toggleModal(true); lucide.createIcons();
-        }
+        function openAddModal() { document.getElementById('modalTitle').innerText = "Initiate Record"; document.getElementById('editId').value = ""; document.getElementById('itemRowsContainer').innerHTML = createItemRow(); document.getElementById('custName').value = ""; document.getElementById('custPhone').value = ""; document.getElementById('grandTotal').innerText = "0.00"; toggleModal(true); lucide.createIcons(); }
+        async function editInvoice(id) { const inv = allInvoices.find(i => i.id === id); if(!inv) return; document.getElementById('editId').value = id; document.getElementById('modalTitle').innerText = "Modify NX-Record"; document.getElementById('custName').value = inv.customerName; document.getElementById('custPhone').value = inv.customerPhone; document.getElementById('warranty').value = inv.warranty || "No Warranty"; document.getElementById('initialStatus').value = inv.status; const cont = document.getElementById('itemRowsContainer'); cont.innerHTML = ""; (inv.items || []).forEach(it => cont.insertAdjacentHTML('beforeend', createItemRow(it))); calculateTotal(); toggleModal(true); lucide.createIcons(); }
 
         window.onload = listenToInvoices;
     </script>
