@@ -37,10 +37,8 @@
         
         .font-num { font-family: 'Inter', sans-serif; }
 
-        /* --- 90Hz SMOOTH ENGINE & GPU --- */
         .gpu { transform: translate3d(0,0,0); backface-visibility: hidden; perspective: 1000px; will-change: transform, opacity; }
 
-        /* Modal Animation - Spring Physics */
         .modal-wrapper {
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
             transform: translateY(110%) scale(0.95); opacity: 0; pointer-events: none;
@@ -48,15 +46,12 @@
         }
         .modal-wrapper.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
-        /* Page Transitions */
         .view-section { display: none; opacity: 0; transform: scale(0.99); transition: opacity 0.2s ease, transform 0.2s ease; will-change: opacity, transform; }
         .view-section.active { display: block; opacity: 1; transform: scale(1); }
 
-        /* List Animation */
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .list-anim { animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
 
-        /* UI Elements */
         .glass-nav { background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
         .glass-bottom { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid rgba(226, 232, 240, 0.8); }
         
@@ -66,71 +61,55 @@
         .tab-active { background: #0f172a !important; color: #fff !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); }
         .nav-item-active { color: #ef4444 !important; }
 
-        /* Inputs */
         .float-input-group { position: relative; width: 100%; transition: 0.3s; }
         .float-input-group label { position: absolute; top: 6px; left: 14px; font-size: 9px; font-weight: 800; color: #94a3b8; text-transform: uppercase; pointer-events: none; }
         .float-input-group input, .float-input-group select { padding-top: 22px; padding-bottom: 10px; }
 
-        /* Toast */
         #toast-container { position: fixed; top: calc(16px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
         .toast { background: #0f172a; color: white; padding: 12px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.15); animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; transform: translateY(-20px); pointer-events: auto; display: flex; align-items: center; gap: 8px; }
         @keyframes toastIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* Timeline Specifics */
         .timeline-item { position: relative; padding-left: 24px; padding-bottom: 24px; border-left: 2px solid #e2e8f0; }
         .timeline-item:last-child { border-left: none; padding-bottom: 0; }
         .timeline-item.active { border-left-color: #10b981; }
         .timeline-dot { position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #e2e8f0; border: 2px solid #fff; box-shadow: 0 0 0 2px #e2e8f0; }
         .timeline-item.active .timeline-dot { background: #10b981; box-shadow: 0 0 0 2px #10b981; }
 
-       /* --- SAFE AREA ADJUSTMENTS (IMPROVED) --- */
-.safe-top { 
-    /* Ambil nilai safe area + 10px extra supaya tak rapat sangat dengan jam */
-    padding-top: calc(10px + env(safe-area-inset-top)); 
-}
-
-.safe-bottom { 
-    /* Ambil nilai safe area + 15px extra supaya tak kena bar home */
-    padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
-}
-
-/* Fix untuk body supaya content tak sangkut bawah nav */
-body {
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
-}
-
-/* Toast pun kita kena naikkan sikit supaya tak kena Notch */
-#toast-container { 
-    position: fixed; 
-    top: calc(20px + env(safe-area-inset-top)); 
-    left: 50%; 
-    transform: translateX(-50%); 
-    z-index: 100; 
-}
-
+        @supports (padding: max(0px)) {
+            .safe-top { padding-top: max(0.75rem, env(safe-area-inset-top)) !important; }
+            .safe-bottom { padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important; }
+            .modal-safe-bottom { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)) !important; }
+        }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="min-h-screen pb-32 bg-[#f8fafc]">
 
+    <div id="gatekeeperSplash" class="fixed inset-0 z-[9999] bg-[#0f172a] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="relative w-24 h-24 bg-slate-800/80 rounded-[2.5rem] p-4 mb-6 shadow-2xl flex items-center justify-center animate-pulse">
+            <img src="logo.png" class="w-full h-full object-contain" alt="Logo">
+        </div>
+        <p class="text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">Memeriksa Akses...</p>
+    </div>
     <div id="toast-container"></div>
 
-    <nav class="sticky top-0 z-40 glass-nav px-5 gpu safe-top pb-3">
-    <div class="max-w-md mx-auto flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
-                <span class="text-white font-black text-[12px] italic">NX</span>
+    <nav class="sticky top-0 z-40 glass-nav px-5 py-3 gpu safe-top">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-slate-900/10 tap-effect">
+                    <span class="text-white font-black text-[12px] italic">NX</span>
+                </div>
+                <div>
+                    <h1 class="text-[12px] font-black italic uppercase tracking-[0.2em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
+                    <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none pl-0.5">RMS Final v7.1</p>
+                </div>
             </div>
-            <div>
-                <h1 class="text-[12px] font-black italic uppercase tracking-[0.2em] text-slate-900 leading-none">NASZEX <span class="text-red-600">CLOUD</span></h1>
-                <p class="text-[7px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1.5 leading-none">RMS Final v7.1</p>
-            </div>
+            <button onclick="refreshData()" class="w-10 h-10 flex items-center justify-center bg-white rounded-xl text-slate-400 border border-slate-200 tap-effect shadow-sm">
+                <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
+            </button>
         </div>
-        <button onclick="refreshData()" class="w-10 h-10 flex items-center justify-center bg-white rounded-xl text-slate-400 border border-slate-200 tap-effect shadow-sm">
-            <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4"></i>
-        </button>
-    </div>
-</nav>
-
+    </nav>
 
     <div class="max-w-md mx-auto p-4 space-y-6">
         
@@ -163,7 +142,7 @@ body {
             </div>
 
             <div id="invoiceContainer" class="space-y-3 pb-8 min-h-[50vh]">
-                </div>
+            </div>
             
             <div class="text-center pt-2">
                  <p class="text-[8px] text-slate-300 font-bold uppercase tracking-widest">Showing Latest 50 Records</p>
@@ -289,34 +268,39 @@ body {
         </main>
     </div>
 
-    <div class="fixed bottom-0 left-0 right-0 z-40 glass-bottom px-6 gpu safe-bottom">
-    <div class="max-w-md mx-auto grid grid-cols-4 items-center h-16">
-        <button onclick="showPage('dashboard')" id="nav-dash" class="group flex flex-col items-center justify-center gap-1 tap-effect transition-colors nav-item-active">
-            <i data-lucide="layout-grid" class="w-5 h-5"></i>
-            <span class="text-[9px] font-black uppercase">Home</span>
-        </button>
-        
-        <button onclick="openAddModal()" class="group flex flex-col items-center justify-center gap-1 tap-effect text-slate-900">
-            <div class="w-6 h-6 bg-slate-900 text-white rounded-lg flex items-center justify-center shadow-md">
-                 <i data-lucide="plus" class="w-4 h-4"></i>
-            </div>
-            <span class="text-[9px] font-black uppercase">New</span>
-        </button>
-        
-        <button onclick="showPage('reports')" id="nav-report" class="group flex flex-col items-center justify-center gap-1 tap-effect text-slate-400">
-            <i data-lucide="pie-chart" class="w-5 h-5"></i>
-            <span class="text-[9px] font-black uppercase">Data</span>
-        </button>
-        
-        <button onclick="showPage('tools')" id="nav-tools" class="group flex flex-col items-center justify-center gap-1 tap-effect text-slate-400">
-            <i data-lucide="wrench" class="w-5 h-5"></i>
-            <span class="text-[9px] font-black uppercase">Tools</span>
-        </button>
+    <div class="fixed bottom-0 left-0 right-0 z-40 glass-bottom px-4 py-2 safe-bottom gpu">
+        <div class="max-w-md mx-auto grid grid-cols-5 items-end h-14 pb-2">
+            <button onclick="showPage('dashboard')" id="nav-dash" class="group flex flex-col items-center justify-center gap-1.5 tap-effect transition-colors nav-item-active">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                <span class="text-[9px] font-black uppercase tracking-tight">Home</span>
+            </button>
+            
+            <button onclick="openAddModal()" class="group flex flex-col items-center justify-center gap-1.5 tap-effect text-slate-900">
+                <div class="w-5 h-5 bg-slate-900 text-white rounded-md flex items-center justify-center shadow-md">
+                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[9px] font-black uppercase tracking-tight">New</span>
+            </button>
+            
+            <button onclick="showPage('reports')" id="nav-report" class="group flex flex-col items-center justify-center gap-1.5 tap-effect text-slate-400 transition-colors">
+                <i data-lucide="pie-chart" class="w-5 h-5"></i>
+                <span class="text-[9px] font-black uppercase tracking-tight">Data</span>
+            </button>
+            
+            <button onclick="showPage('tools')" id="nav-tools" class="group flex flex-col items-center justify-center gap-1.5 tap-effect text-slate-400 transition-colors">
+                <i data-lucide="wrench" class="w-5 h-5"></i>
+                <span class="text-[9px] font-black uppercase tracking-tight">Tools</span>
+            </button>
+
+            <button onclick="window.location.href='setting.html'" id="nav-settings" class="group flex flex-col items-center justify-center gap-1.5 tap-effect text-slate-400 transition-colors">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <span class="text-[9px] font-black uppercase tracking-tight">Setting</span>
+            </button>
+        </div>
     </div>
-</div>
 
     <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden modal-wrapper flex flex-col justify-end sm:justify-center gpu">
-        <div class="bg-[#f8fafc] w-full max-w-md mx-auto h-[92vh] sm:h-[85vh] sm:rounded-3xl rounded-t-[2.5rem] shadow-2xl flex flex-col overflow-hidden relative">
+        <div class="bg-[#f8fafc] w-full max-w-md mx-auto h-[92dvh] sm:h-[85dvh] sm:rounded-3xl rounded-t-[2.5rem] shadow-2xl flex flex-col overflow-hidden relative">
             <div class="px-6 py-5 bg-white/80 backdrop-blur-md border-b border-slate-100 flex justify-between items-center shrink-0 sticky top-0 z-10">
                 <div>
                     <h2 id="modalTitle" class="text-sm font-black uppercase text-slate-900">Initiate Job</h2>
@@ -360,7 +344,7 @@ body {
                 </div>
             </div>
 
-            <div class="p-5 bg-white border-t border-slate-100 shrink-0 safe-bottom">
+            <div class="p-5 bg-white border-t border-slate-100 shrink-0 modal-safe-bottom">
                 <div class="flex justify-between items-center mb-4">
                     <select id="initialStatus" class="bg-slate-100 text-slate-700 py-2 px-3 rounded-xl text-[10px] font-black uppercase outline-none">
                         <option value="outstanding">Unpaid</option>
@@ -379,7 +363,7 @@ body {
     </div>
 
     <div id="actionModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden modal-wrapper flex flex-col justify-end gpu">
-        <div class="bg-white rounded-t-[2.5rem] w-full p-6 pb-10 shadow-2xl space-y-5 safe-bottom">
+        <div class="bg-white rounded-t-[2.5rem] w-full p-6 pb-10 shadow-2xl space-y-5 modal-safe-bottom">
             <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto"></div>
             <div class="text-center">
                  <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Tindakan Untuk</p>
@@ -399,7 +383,7 @@ body {
 
             <div class="grid grid-cols-2 gap-3">
                 <button id="btnToggleStatus" class="col-span-2 p-4 rounded-2xl font-black text-[10px] uppercase shadow-lg tap-effect flex justify-between items-center px-6 transition-all duration-300">
-                    </button>
+                </button>
 
                 <button onclick="handleAction('getlink')" class="p-4 bg-blue-50 text-blue-600 rounded-2xl font-black text-[9px] uppercase border border-blue-100 flex justify-center items-center gap-2 tap-effect">
                     <i data-lucide="link" class="w-4 h-4"></i> Link
@@ -416,6 +400,7 @@ body {
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
     <script>
@@ -428,16 +413,47 @@ body {
             });
         }
 
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCSg9tH4E-71u8b3oFf5j9pDvhoNHZYnZg", 
-            authDomain: "invoicely-52db9.firebaseapp.com", 
-            projectId: "invoicely-52db9", 
-            storageBucket: "invoicely-52db9.firebasestorage.app", 
-            messagingSenderId: "512282448037", 
-            appId: "1:512282448037:web:ad9600a2aa477c3533fd4c" 
+        // Fix Icon Hilang sebab Bfcache Safari
+        document.addEventListener("DOMContentLoaded", () => { lucide.createIcons(); });
+        window.addEventListener("pageshow", () => { lucide.createIcons(); });
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJdeEbuE9FlAeK4cJRaqiMkd7aa8EbwWE",
+            authDomain: "rms-cloudnas.firebaseapp.com",
+            databaseURL: "https://rms-cloudnas-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "rms-cloudnas",
+            storageBucket: "rms-cloudnas.firebasestorage.app",
+            messagingSenderId: "142738217487",
+            appId: "1:142738217487:web:2c2a08c40b77447484a17a"
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        
+        // --- GATEKEEPER LOGIC (SESI SESSION STORAGE) ---
+        const splash = document.getElementById('gatekeeperSplash');
+        
+        // Kalau dah pernah lalu skrin ni untuk sesi ni, terus hilangkan
+        if (sessionStorage.getItem('rms_session')) {
+            if(splash) splash.style.display = 'none';
+        }
+
+        const auth = firebase.auth();
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.replace('login.html');
+            } else {
+                // Kalau baru pertama kali buka dalam sesi ni, tunjuk efek fade out
+                if (!sessionStorage.getItem('rms_session')) {
+                    if (splash) {
+                        splash.style.opacity = '0';
+                        setTimeout(() => {
+                            splash.style.display = 'none';
+                            sessionStorage.setItem('rms_session', 'true');
+                        }, 500); 
+                    }
+                }
+            }
+        });
 
         let allInvoices = [], currentFilter = 'all', activeId = null;
         let searchTimeout = null;
@@ -664,7 +680,13 @@ body {
         function trackStatus() {
             const p = document.getElementById('toolTrackPhone').value.trim();
             if(!p) return showToast("Masukkan No. Phone", "error");
-            const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b)=>b.createdAt-a.createdAt)[0];
+            
+            const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b) => {
+                const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                return dateB - dateA;
+            })[0];
+            
             if(!match) return showToast("Tiada rekod dijumpai", "error");
             
             document.getElementById('trackEmpty').classList.add('hidden');
@@ -795,7 +817,12 @@ body {
 
         function handleTools(act) {
             const p = document.getElementById('toolReceiptPhone').value;
-            const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b)=>b.createdAt-a.createdAt)[0];
+            const match = allInvoices.filter(i => i.customerPhone.includes(p)).sort((a,b)=>{
+                const dA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                const dB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                return dB - dA;
+            })[0];
+            
             if(!match) return showToast("Rekod tidak dijumpai", "error");
             if(act === 'whatsapp') window.open(`https://wa.me/60${p.replace(/^0+/,'')}`); else generateInvoicePDF(match);
         }
@@ -806,15 +833,16 @@ body {
             if(t==='performance'){ document.getElementById('performanceContainer').classList.remove('hidden'); generateReport(); }
             else { document.getElementById('profitContainer').classList.remove('hidden'); generateProfitReport(); }
         }
-        function closeSubReport() { document.getElementById('performanceContainer').classList.add('hidden'); document.getElementById('profitContainer').classList.add('hidden'); document.getElementById('dataMenu').classList.remove('hidden'); }
-        function openSubTool(t) { document.getElementById('toolsMenu').classList.add('hidden'); if(t==='receipt') document.getElementById('toolReceiptContainer').classList.remove('hidden'); else document.getElementById('toolTrackContainer').classList.remove('hidden'); }
         function closeSubTool() { document.getElementById('toolReceiptContainer').classList.add('hidden'); document.getElementById('toolTrackContainer').classList.add('hidden'); document.getElementById('toolsMenu').classList.remove('hidden'); }
+        function openSubTool(t) { document.getElementById('toolsMenu').classList.add('hidden'); if(t==='receipt') document.getElementById('toolReceiptContainer').classList.remove('hidden'); else document.getElementById('toolTrackContainer').classList.remove('hidden'); }
+        function closeSubReport() { document.getElementById('performanceContainer').classList.add('hidden'); document.getElementById('profitContainer').classList.add('hidden'); document.getElementById('dataMenu').classList.remove('hidden'); }
 
         function generateReport() {
             const tb = document.getElementById('reportTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
             let h = "";
+            const currentYear = new Date().getFullYear();
             mo.forEach((m, i) => {
-                const monthly = allInvoices.filter(inv => { const d = inv.createdAt?.toDate ? inv.createdAt.toDate() : new Date(); return d.getMonth() === i && d.getFullYear() === 2026; });
+                const monthly = allInvoices.filter(inv => { const d = inv.createdAt?.toDate ? inv.createdAt.toDate() : new Date(); return d.getMonth() === i && d.getFullYear() === currentYear; });
                 const pS = monthly.reduce((s, inv) => inv.status === 'paid' ? s + parseFloat(inv.total) : s, 0);
                 if (monthly.length > 0) h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-slate-400">${monthly.length}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(pS)}</td></tr>`;
             });
@@ -824,14 +852,16 @@ body {
         function generateProfitReport() {
             const tb = document.getElementById('profitTableBody'), mo = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
             let h = "", totalNett = 0;
+            const currentYear = new Date().getFullYear();
             mo.forEach((m, i) => {
-                const monthly = allInvoices.filter(inv => { const d = inv.createdAt?.toDate ? inv.createdAt.toDate() : new Date(); return d.getMonth() === i && d.getFullYear() === 2026 && inv.status === 'paid'; });
+                const monthly = allInvoices.filter(inv => { const d = inv.createdAt?.toDate ? inv.createdAt.toDate() : new Date(); return d.getMonth() === i && d.getFullYear() === currentYear && inv.status === 'paid'; });
                 let mModal = 0, mRev = 0;
                 monthly.forEach(inv => { mRev += parseFloat(inv.total); (inv.items || []).forEach(it => { mModal += (parseFloat(it.modal)||0) * (parseFloat(it.qty)||1); }); });
                 const mProfit = mRev - mModal; totalNett += mProfit;
                 if(mRev > 0) h += `<tr class="border-b border-slate-50 last:border-0"><td class="pl-6 py-4 text-slate-500 uppercase font-bold text-[9px]">${m}</td><td class="text-center text-rose-500">RM ${Math.round(mModal)}</td><td class="text-right pr-6 text-emerald-600 italic font-black">RM ${Math.round(mProfit)}</td></tr>`;
             });
-            tb.innerHTML = h; document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
+            tb.innerHTML = h || '<tr><td colspan="3" class="text-center py-8">Tiada Data</td></tr>';
+            document.getElementById('total-net-profit').innerText = `RM ${Math.round(totalNett)}`;
         }
 
         function handleAction(type) {
